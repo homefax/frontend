@@ -1,8 +1,13 @@
 {
-  "name": "frontend",
+  "name": "homefax-frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chakra-ui/icons": "^2.2.4",
+    "@chakra-ui/react": "^3.8.1",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@reduxjs/toolkit": "^2.6.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
@@ -11,17 +16,32 @@
     "@types/node": "^16.18.126",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
+    "axios": "^1.8.0",
+    "ethers": "^6.13.5",
+    "framer-motion": "^12.4.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.2.0",
     "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "web3modal": "^1.9.12"
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:mock": "REACT_APP_USE_MOCK_DATA=true react-scripts start",
+    "start:prod": "REACT_APP_USE_MOCK_DATA=false react-scripts start",
     "build": "react-scripts build",
+    "build:mock": "REACT_APP_USE_MOCK_DATA=true react-scripts build",
+    "build:prod": "REACT_APP_USE_MOCK_DATA=false react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "prepare-release": "npm run lint && npm run test && npm run build"
   },
   "eslintConfig": {
     "extends": [
@@ -40,5 +60,17 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-react": "^7.34.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^3.2.5",
+    "source-map-explorer": "^2.5.3"
+  },
+  "proxy": "http://localhost:3001"
 }
