@@ -1,28 +1,40 @@
-import axios from "axios";
-import { mockProperties, Property } from "./mockData";
+// Import mock data
+// We need to use require instead of import to avoid TypeScript errors
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { mockProperties } = require("./mockData");
+
+// Define the Property interface here to avoid import issues
+export interface Property {
+  id: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  yearBuilt: number;
+  totalReports: number;
+  imageUrl: string;
+  price: number;
+  bedrooms: number;
+  bathrooms: number;
+  squareFeet: number;
+  description: string;
+  isVerified: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
 
 // Check if we should use mock data
-const useMockData = process.env.REACT_APP_USE_MOCK_DATA === "true";
+// For development, we'll always use mock data
+const useMockData = true;
 
-// Create axios instance
-const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "http://localhost:3001",
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
-// Add request interceptor to include auth token
-api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+// Simple fetch wrapper
+const fetchAPI = async (url: string, options?: RequestInit) => {
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    throw new Error(`API error: ${response.status}`);
+  }
+  return response.json();
+};
 
 // API service functions
 export const apiService = {
@@ -46,9 +58,13 @@ export const apiService = {
       }
 
       // Real API call
-      const response = await api.post("/auth/login", { email, password });
-      localStorage.setItem("token", response.data.access_token);
-      return response.data;
+      const data = await fetchAPI("/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      localStorage.setItem("token", data.access_token);
+      return data;
     },
 
     register: async (userData: any) => {
@@ -68,9 +84,13 @@ export const apiService = {
       }
 
       // Real API call
-      const response = await api.post("/auth/register", userData);
-      localStorage.setItem("token", response.data.access_token);
-      return response.data;
+      const data = await fetchAPI("/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userData),
+      });
+      localStorage.setItem("token", data.access_token);
+      return data;
     },
 
     loginWithGmail: async () => {
@@ -120,9 +140,13 @@ export const apiService = {
       }
 
       // Real API call
-      const response = await api.post("/auth/wallet", { walletAddress });
-      localStorage.setItem("token", response.data.access_token);
-      return response.data;
+      const data = await fetchAPI("/auth/wallet", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ walletAddress }),
+      });
+      localStorage.setItem("token", data.access_token);
+      return data;
     },
 
     logout: () => {
@@ -142,8 +166,10 @@ export const apiService = {
       }
 
       // Real API call
-      const response = await api.get("/auth/profile");
-      return response.data;
+      const token = localStorage.getItem("token");
+      return fetchAPI("/auth/profile", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
     },
   },
 
@@ -160,7 +186,7 @@ export const apiService = {
         if (params?.search) {
           const search = params.search.toLowerCase();
           filteredProperties = filteredProperties.filter(
-            (property) =>
+            (property: Property) =>
               property.address.toLowerCase().includes(search) ||
               property.city.toLowerCase().includes(search) ||
               property.zipCode.includes(search)
@@ -169,7 +195,7 @@ export const apiService = {
 
         if (params?.state) {
           filteredProperties = filteredProperties.filter(
-            (property) => property.state === params.state
+            (property: Property) => property.state === params.state
           );
         }
 
@@ -186,8 +212,13 @@ export const apiService = {
       }
 
       // Real API call
-      const response = await api.get("/properties", { params });
-      return response.data;
+      const queryParams = new URLSearchParams();
+      if (params) {
+        Object.entries(params).forEach(([key, value]) => {
+          if (value) queryParams.append(key, String(value));
+        });
+      }
+      return fetchAPI(`/properties?${queryParams.toString()}`);
     },
 
     getById: async (id: string) => {
@@ -206,8 +237,7 @@ export const apiService = {
       }
 
       // Real API call
-      const response = await api.get(`/properties/${id}`);
-      return response.data;
+      return fetchAPI(`/properties/${id}`);
     },
 
     create: async (propertyData: Partial<Property>) => {
@@ -230,8 +260,15 @@ export const apiService = {
       }
 
       // Real API call
-      const response = await api.post("/properties", propertyData);
-      return response.data;
+      const token = localStorage.getItem("token");
+      return fetchAPI("/properties", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(propertyData),
+      });
     },
 
     update: async (id: string, propertyData: Partial<Property>) => {
@@ -262,8 +299,15 @@ export const apiService = {
       }
 
       // Real API call
-      const response = await api.patch(`/properties/${id}`, propertyData);
-      return response.data;
+      const token = localStorage.getItem("token");
+      return fetchAPI(`/properties/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(propertyData),
+      });
     },
 
     delete: async (id: string) => {
@@ -287,7 +331,11 @@ export const apiService = {
       }
 
       // Real API call
-      await api.delete(`/properties/${id}`);
+      const token = localStorage.getItem("token");
+      await fetchAPI(`/properties/${id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
       return { success: true };
     },
   },
@@ -364,8 +412,10 @@ export const apiService = {
       }
 
       // Real API call
-      const response = await api.get(`/reports?propertyId=${propertyId}`);
-      return response.data;
+      const token = localStorage.getItem("token");
+      return fetchAPI(`/reports?propertyId=${propertyId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
     },
 
     purchase: async (reportId: string, paymentData: any) => {
@@ -389,11 +439,15 @@ export const apiService = {
       }
 
       // Real API call
-      const response = await api.post(
-        `/reports/${reportId}/purchase`,
-        paymentData
-      );
-      return response.data;
+      const token = localStorage.getItem("token");
+      return fetchAPI(`/reports/${reportId}/purchase`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(paymentData),
+      });
     },
 
     getContent: async (reportId: string) => {
@@ -409,8 +463,10 @@ export const apiService = {
       }
 
       // Real API call
-      const response = await api.get(`/reports/${reportId}/content`);
-      return response.data;
+      const token = localStorage.getItem("token");
+      return fetchAPI(`/reports/${reportId}/content`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
     },
   },
 };

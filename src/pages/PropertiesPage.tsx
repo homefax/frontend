@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import apiService from '../services/api';
-import { Property } from '../services/mockData';
+import apiService, { Property } from '../services/api';
 
 interface PropertyCardProps {
   property: Property;

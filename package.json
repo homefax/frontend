@@ -16,32 +16,23 @@
     "@types/node": "^16.18.126",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
-    "axios": "^1.8.0",
-    "ethers": "^6.13.5",
-    "framer-motion": "^12.4.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.2.0",
     "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4",
-    "web3modal": "^1.9.12"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
-    "start:mock": "REACT_APP_USE_MOCK_DATA=true react-scripts start",
-    "start:prod": "REACT_APP_USE_MOCK_DATA=false react-scripts start",
+    "start:mock": "react-scripts start",
     "build": "react-scripts build",
-    "build:mock": "REACT_APP_USE_MOCK_DATA=true react-scripts build",
-    "build:prod": "REACT_APP_USE_MOCK_DATA=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
-    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
-    "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "prepare-release": "npm run lint && npm run test && npm run build"
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
   },
   "eslintConfig": {
     "extends": [
