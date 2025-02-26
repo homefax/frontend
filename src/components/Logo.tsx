@@ -5,17 +5,17 @@ interface LogoProps {
   height?: number;
 }
 
-const Logo: React.FC<LogoProps> = ({ width = 200, height = 200 }) => {
+const Logo: React.FC<LogoProps> = ({ width = 120, height = 30 }) => {
   return (
     <div className="logo-container" style={{ width, height }}>
       <div className="logo-text" style={{ 
         fontFamily: 'Arial, sans-serif', 
         fontWeight: 'bold', 
-        fontSize: `${width / 12}px`,
+        fontSize: '18px',
         color: '#2A5082',
-        textAlign: 'center',
-        marginTop: '10px'
+        textAlign: 'left',
       }}>
+        HomeFax
       </div>
     </div>
   );

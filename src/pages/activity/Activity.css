@@ -1,0 +1,233 @@
+/* Activity Page Styles */
+.activity-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.activity-header h1 {
+  font-size: 2.5rem;
+  color: var(--primary-dark);
+}
+
+.back-to-dashboard {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.back-to-dashboard:hover {
+  text-decoration: underline;
+}
+
+.activity-search {
+  margin-bottom: 1.5rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.activity-filters {
+  display: flex;
+  overflow-x: auto;
+  margin-bottom: 2rem;
+  padding-bottom: 0.5rem;
+}
+
+.activity-filters button {
+  padding: 0.75rem 1.25rem;
+  background-color: var(--light-background);
+  border: 1px solid var(--border-color);
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.activity-filters button:first-child {
+  border-radius: 4px 0 0 4px;
+}
+
+.activity-filters button:last-child {
+  border-radius: 0 4px 4px 0;
+}
+
+.activity-filters button.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.no-activity {
+  text-align: center;
+  padding: 3rem;
+  background-color: var(--background-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.activity-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.activity-day {
+  display: flex;
+  flex-direction: column;
+}
+
+.activity-date {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.activity-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-left: 1rem;
+}
+
+.activity-item {
+  display: flex;
+  gap: 1rem;
+  background-color: var(--background-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.activity-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -1rem;
+  bottom: 0;
+  width: 2px;
+  background-color: var(--border-color);
+}
+
+.activity-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.activity-icon::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -1rem;
+  width: 1rem;
+  height: 2px;
+  background-color: var(--border-color);
+  transform: translateY(-50%);
+}
+
+.activity-icon.purchase {
+  background-color: rgba(74, 144, 226, 0.1);
+  color: var(--primary-color);
+}
+
+.activity-icon.upload {
+  background-color: rgba(40, 167, 69, 0.1);
+  color: var(--success-color);
+}
+
+.activity-icon.interest {
+  background-color: rgba(255, 193, 7, 0.1);
+  color: var(--warning-color);
+}
+
+.activity-icon.verification {
+  background-color: rgba(111, 66, 193, 0.1);
+  color: #6f42c1;
+}
+
+.activity-icon.ai_processing {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: var(--error-color);
+}
+
+.activity-content {
+  flex: 1;
+}
+
+.activity-description {
+  margin-bottom: 0.5rem;
+}
+
+.activity-time {
+  font-size: 0.9rem;
+  color: var(--light-text);
+  margin-bottom: 0.5rem;
+}
+
+.activity-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.activity-link {
+  color: var(--primary-color);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.activity-link:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .activity-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .activity-filters {
+    padding-bottom: 0.5rem;
+  }
+  
+  .activity-filters button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .activity-item {
+    padding: 1rem;
+  }
+  
+  .activity-icon {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+}

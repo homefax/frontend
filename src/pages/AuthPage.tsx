@@ -61,15 +61,15 @@ const AuthPage: React.FC = () => {
     setTimeout(() => {
       console.log(`Attempting to ${mode} with ${authOption}: ${email}`);
       
-      // For demo purposes, just clear the form and redirect to properties page
+      // For demo purposes, just clear the form and redirect to dashboard page
       setEmail('');
       setPassword('');
       setConfirmPassword('');
       setError('');
       setIsLoading(false);
       
-      // Redirect to properties page
-      navigate('/properties');
+      // Redirect to dashboard page
+      navigate('/dashboard');
     }, 1500);
   };
   
@@ -82,8 +82,8 @@ const AuthPage: React.FC = () => {
       console.log('Authenticating with Gmail');
       setIsLoading(false);
       
-      // Redirect to properties page
-      navigate('/properties');
+      // Redirect to dashboard page
+      navigate('/dashboard');
     }, 1000);
   };
   
@@ -96,8 +96,8 @@ const AuthPage: React.FC = () => {
       console.log('Connecting wallet');
       setIsLoading(false);
       
-      // Redirect to properties page
-      navigate('/properties');
+      // Redirect to dashboard page
+      navigate('/dashboard');
     }, 1000);
   };
   
