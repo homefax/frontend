@@ -1,0 +1,150 @@
+.logo-container {
+  position: relative;
+  overflow: visible;
+}
+
+/* Pulse animation for the hexagon */
+@keyframes pulse {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+}
+
+/* Glow effect for the logo */
+@keyframes glow {
+  0% {
+    filter: drop-shadow(0 0 2px rgba(79, 172, 254, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 5px rgba(79, 172, 254, 0.6));
+  }
+  100% {
+    filter: drop-shadow(0 0 2px rgba(79, 172, 254, 0.3));
+  }
+}
+
+/* Node pulse animation */
+@keyframes nodePulse {
+  0% {
+    r: 1.5;
+    opacity: 0.7;
+  }
+  50% {
+    r: 2.5;
+    opacity: 1;
+  }
+  100% {
+    r: 1.5;
+    opacity: 0.7;
+  }
+}
+
+/* Circuit line animation */
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 15;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Apply animations to SVG elements */
+.logo-icon {
+  animation: pulse 4s infinite ease-in-out;
+}
+
+.circuit-line {
+  stroke-dasharray: 15;
+  stroke-dashoffset: 15;
+  animation: dash 2s infinite linear;
+}
+
+.node {
+  animation: nodePulse 3s infinite ease-in-out;
+}
+
+.node:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.node:nth-child(3) {
+  animation-delay: 1s;
+}
+
+.node:nth-child(4) {
+  animation-delay: 1.5s;
+}
+
+.node:nth-child(5) {
+  animation-delay: 2s;
+}
+
+.node:nth-child(6) {
+  animation-delay: 2.5s;
+}
+
+.logo-container svg {
+  animation: glow 4s infinite ease-in-out;
+}
+
+/* Hover effects */
+.logo-container:hover svg {
+  filter: drop-shadow(0 0 8px rgba(79, 172, 254, 0.8));
+  transition: filter 0.3s ease;
+}
+
+.logo-container:hover .hexagon-shape {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+.logo-text {
+  transition: fill 0.3s ease;
+}
+
+.logo-tagline {
+  transition: fill 0.3s ease;
+  letter-spacing: 0.5px;
+}
+
+.logo-container:hover .logo-text {
+  fill: #4FACFE;
+}
+
+.logo-container:hover .logo-tagline {
+  fill: #4FACFE;
+  opacity: 0.9;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .logo-text {
+  fill: #4FACFE;
+  filter: drop-shadow(0 0 3px rgba(79, 172, 254, 0.6));
+}
+
+[data-theme="dark"] .logo-tagline {
+  fill: rgba(255, 255, 255, 0.8);
+  filter: drop-shadow(0 0 2px rgba(79, 172, 254, 0.4));
+}
+
+[data-theme="dark"] .logo-container svg {
+  filter: drop-shadow(0 0 5px rgba(79, 172, 254, 0.5));
+}
+
+[data-theme="dark"] .logo-container:hover svg {
+  filter: drop-shadow(0 0 10px rgba(79, 172, 254, 0.8));
+}
+
+[data-theme="dark"] .logo-container:hover .logo-tagline {
+  fill: rgba(255, 255, 255, 1);
+}

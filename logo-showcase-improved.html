@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HomeFax Logo Showcase - Improved</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f7fa;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      h1 {
+        color: #2a5082;
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+      }
+
+      .subtitle {
+        color: #666;
+        font-size: 1.2rem;
+      }
+
+      .theme-toggle {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+      }
+
+      .toggle-btn {
+        background-color: #f0f0f0;
+        border: none;
+        padding: 10px 20px;
+        margin: 0 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .toggle-btn.active {
+        background-color: #2a5082;
+        color: white;
+      }
+
+      .logo-options {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        flex-wrap: wrap;
+        margin-bottom: 60px;
+      }
+
+      .logo-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        width: 100%;
+        max-width: 500px;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .logo-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .logo-title {
+        color: #2a5082;
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .logo-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      .logo-description {
+        color: #666;
+        line-height: 1.6;
+      }
+
+      .features {
+        margin-top: 20px;
+      }
+
+      .feature {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .feature-icon {
+        color: #4facfe;
+        margin-right: 10px;
+        font-weight: bold;
+      }
+
+      .dark-mode-container {
+        background-color: #121212;
+        border-radius: 10px;
+        padding: 30px;
+        margin-top: 20px;
+      }
+
+      .dark-mode-title {
+        color: #4facfe;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 60px;
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      /* Logo CSS */
+      .logo-container {
+        position: relative;
+        overflow: visible;
+      }
+
+      /* Pulse animation for the hexagon */
+      @keyframes pulse {
+        0% {
+          opacity: 0.8;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.05);
+        }
+        100% {
+          opacity: 0.8;
+          transform: scale(1);
+        }
+      }
+
+      /* Glow effect for the logo */
+      @keyframes glow {
+        0% {
+          filter: drop-shadow(0 0 2px rgba(79, 172, 254, 0.3));
+        }
+        50% {
+          filter: drop-shadow(0 0 5px rgba(79, 172, 254, 0.6));
+        }
+        100% {
+          filter: drop-shadow(0 0 2px rgba(79, 172, 254, 0.3));
+        }
+      }
+
+      /* Node pulse animation */
+      @keyframes nodePulse {
+        0% {
+          r: 1.5;
+          opacity: 0.7;
+        }
+        50% {
+          r: 2.5;
+          opacity: 1;
+        }
+        100% {
+          r: 1.5;
+          opacity: 0.7;
+        }
+      }
+
+      /* Circuit line animation */
+      @keyframes dash {
+        0% {
+          stroke-dashoffset: 15;
+        }
+        100% {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      /* Apply animations to SVG elements */
+      .logo-icon {
+        animation: pulse 4s infinite ease-in-out;
+      }
+
+      .circuit-line {
+        stroke-dasharray: 15;
+        stroke-dashoffset: 15;
+        animation: dash 2s infinite linear;
+      }
+
+      .node {
+        animation: nodePulse 3s infinite ease-in-out;
+      }
+
+      .node:nth-child(2) {
+        animation-delay: 0.5s;
+      }
+
+      .node:nth-child(3) {
+        animation-delay: 1s;
+      }
+
+      .node:nth-child(4) {
+        animation-delay: 1.5s;
+      }
+
+      .node:nth-child(5) {
+        animation-delay: 2s;
+      }
+
+      .node:nth-child(6) {
+        animation-delay: 2.5s;
+      }
+
+      svg {
+        animation: glow 4s infinite ease-in-out;
+      }
+
+      /* Light mode enhancements */
+      .light-mode svg {
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>HomeFax Logo Designs</h1>
+        <p class="subtitle">Blockchain-themed logo options for HomeFax</p>
+      </header>
+
+      <div class="theme-toggle">
+        <button class="toggle-btn active" onclick="setLightMode()">
+          Light Mode
+        </button>
+        <button class="toggle-btn" onclick="setDarkMode()">Dark Mode</button>
+      </div>
+
+      <div class="logo-options">
+        <div class="logo-card">
+          <h2 class="logo-title">Option 1: Blockchain Hexagon</h2>
+          <div class="logo-container light-mode" id="hexagon-light">
+            <svg
+              width="300"
+              height="80"
+              viewBox="0 0 240 60"
+              xmlns="http://www.w3.org/2000/svg"
+              style="filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))"
+            >
+              <defs>
+                <linearGradient
+                  id="logoGradient1"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
+                  <stop offset="0%" stop-color="#2A5082" />
+                  <stop offset="100%" stop-color="#4FACFE" />
+                </linearGradient>
+              </defs>
+
+              <!-- Single Blockchain Hexagon -->
+              <g class="logo-icon">
+                <!-- Background for light mode visibility -->
+                <polygon
+                  points="30,10 50,20 50,40 30,50 10,40 10,20"
+                  fill="#E1E4E8"
+                  opacity="0.3"
+                  transform="translate(1, 1)"
+                />
+
+                <polygon
+                  points="30,10 50,20 50,40 30,50 10,40 10,20"
+                  fill="url(#logoGradient1)"
+                  class="hexagon-shape"
+                  stroke="#2A5082"
+                  stroke-width="0.5"
+                />
+
+                <!-- Inner details -->
+                <path
+                  d="M30,15 L42,22 L42,35 L30,42 L18,35 L18,22 Z"
+                  fill="none"
+                  stroke="#FFFFFF"
+                  stroke-width="1"
+                  opacity="0.9"
+                />
+
+                <!-- Connection nodes -->
+                <circle cx="30" cy="10" r="2" fill="#FFFFFF" class="node" />
+                <circle cx="50" cy="20" r="2" fill="#FFFFFF" class="node" />
+                <circle cx="50" cy="40" r="2" fill="#FFFFFF" class="node" />
+                <circle cx="30" cy="50" r="2" fill="#FFFFFF" class="node" />
+                <circle cx="10" cy="40" r="2" fill="#FFFFFF" class="node" />
+                <circle cx="10" cy="20" r="2" fill="#FFFFFF" class="node" />
+
+                <!-- Digital circuit line -->
+                <line
+                  x1="50"
+                  y1="30"
+                  x2="65"
+                  y2="30"
+                  stroke="#4FACFE"
+                  stroke-width="1.5"
+                  class="circuit-line"
+                />
+              </g>
+
+              <!-- Text -->
+              <text
+                x="75"
+                y="35"
+                font-family="Arial, sans-serif"
+                font-weight="bold"
+                font-size="24"
+                fill="#2A5082"
+                class="logo-text"
+              >
+                HomeFax
+              </text>
+            </svg>
+          </div>
+
+          <div
+            class="logo-container dark-mode"
+            id="hexagon-dark"
+            style="display: none"
+          >
+            <svg
+              width="300"
+              height="80"
+              viewBox="0 0 240 60"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <linearGradient
+                  id="logoGradient1Dark"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
+                  <stop offset="0%" stop-color="#4FACFE" />
+                  <stop offset="100%" stop-color="#00E676" />
+                </linearGradient>
+              </defs>
+
+              <!-- Single Blockchain Hexagon -->
+              <g class="logo-icon">
+                <polygon
+                  points="30,10 50,20 50,40 30,50 10,40 10,20"
+                  fill="url(#logoGradient1Dark)"
+                  class="hexagon-shape"
+                />
+
+                <!-- Inner details -->
+                <path
+                  d="M30,15 L42,22 L42,35 L30,42 L18,35 L18,22 Z"
+                  fill="none"
+                  stroke="#FFFFFF"
+                  stroke-width="1"
+                  opacity="0.7"
+                />
+
+                <!-- Connection nodes -->
+                <circle cx="30" cy="10" r="2" fill="#FFFFFF" class="node" />
+                <circle cx="50" cy="20" r="2" fill="#FFFFFF" class="node" />
+                <circle cx="50" cy="40" r="2" fill="#FFFFFF" class="node" />
+                <circle cx="30" cy="50" r="2" fill="#FFFFFF" class="node" />
+                <circle cx="10" cy="40" r="2" fill="#FFFFFF" class="node" />
+                <circle cx="10" cy="20" r="2" fill="#FFFFFF" class="node" />
+
+                <!-- Digital circuit line -->
+                <line
+                  x1="50"
+                  y1="30"
+                  x2="65"
+                  y2="30"
+                  stroke="#00E676"
+                  stroke-width="1.5"
+                  class="circuit-line"
+                />
+              </g>
+
+              <!-- Text -->
+              <text
+                x="75"
+                y="35"
+                font-family="Arial, sans-serif"
+                font-weight="bold"
+                font-size="24"
+                fill="#4FACFE"
+                class="logo-text"
+              >
+                HomeFax
+              </text>
+            </svg>
+          </div>
+
+          <p class="logo-description">
+            This design uses a hexagon shape to represent blockchain technology.
+            The hexagon is a common symbol in blockchain visualization,
+            representing the blocks in a blockchain. The animated nodes and
+            circuit lines emphasize the digital and technological aspects of the
+            HomeFax platform.
+          </p>
+          <div class="features">
+            <div class="feature">
+              <span class="feature-icon">✓</span>
+              <span>Animated nodes with pulsing effect</span>
+            </div>
+            <div class="feature">
+              <span class="feature-icon">✓</span>
+              <span>Circuit line animation representing data flow</span>
+            </div>
+            <div class="feature">
+              <span class="feature-icon">✓</span>
+              <span>Enhanced visibility in both light and dark modes</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="logo-card">
+          <h2 class="logo-title">Option 2: Blockchain Home</h2>
+          <div class="logo-container light-mode" id="home-light">
+            <svg
+              width="300"
+              height="80"
+              viewBox="0 0 240 60"
+              xmlns="http://www.w3.org/2000/svg"
+              style="filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))"
+            >
+              <defs>
+                <linearGradient
+                  id="logoGradient2"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
+                  <stop offset="0%" stop-color="#2A5082" />
+                  <stop offset="100%" stop-color="#4FACFE" />
+                </linearGradient>
+              </defs>
+
+              <!-- Home-shaped blockchain icon -->
+              <g class="logo-icon">
+                <!-- Background for light mode visibility -->
+                <path
+                  d="M10,40 L10,25 L30,10 L50,25 L50,40 L40,40 L40,30 L20,30 L20,40 Z"
+                  fill="#E1E4E8"
+                  opacity="0.3"
+                  transform="translate(1, 1)"
+                />
+
+                <!-- House outline -->
+                <path
+                  d="M10,40 L10,25 L30,10 L50,25 L50,40 L40,40 L40,30 L20,30 L20,40 Z"
+                  fill="url(#logoGradient2)"
+                  class="home-shape"
+                  stroke="#2A5082"
+                  stroke-width="0.5"
+                />
+
+                <!-- Door -->
+                <rect
+                  x="25"
+                  y="30"
+                  width="10"
+                  height="10"
+                  fill="#FFFFFF"
+                  opacity="0.9"
+                />
+
+                <!-- Window -->
+                <rect
+                  x="15"
+                  y="20"
+                  width="8"
+                  height="8"
+                  rx="1"
+                  fill="#FFFFFF"
+                  opacity="0.9"
+                />
+                <rect
+                  x="37"
+                  y="20"
+                  width="8"
+                  height="8"
+                  rx="1"
+                  fill="#FFFFFF"
+                  opacity="0.9"
+                />
+
+                <!-- Circuit pattern overlay -->
+                <path
+                  d="M15,25 L25,17 L35,25 M25,17 L25,10 M35,25 L45,25"
+                  fill="none"
+                  stroke="#FFFFFF"
+                  stroke-width="1"
+                  opacity="0.7"
+                  class="circuit-pattern"
+                />
+
+                <!-- Connection nodes -->
+                <circle cx="10" cy="25" r="2" fill="#FFFFFF" class="node" />
+                <circle cx="30" cy="10" r="2" fill="#FFFFFF" class="node" />
+                <circle cx="50" cy="25" r="2" fill="#FFFFFF" class="node" />
+                <circle cx="40" cy="40" r="2" fill="#FFFFFF" class="node" />
+                <circle cx="10" cy="40" r="2" fill="#FFFFFF" class="node" />
+
+                <!-- Digital circuit line -->
+                <line
+                  x1="50"
+                  y1="30"
+                  x2="65"
+                  y2="30"
+                  stroke="#4FACFE"
+                  stroke-width="1.5"
+                  class="circuit-line"
+                />
+              </g>
+
+              <!-- Text -->
+              <text
+                x="75"
+                y="35"
+                font-family="Arial, sans-serif"
+                font-weight="bold"
+                font-size="24"
+                fill="#2A5082"
+                class="logo-text"
+              >
+                HomeFax
+              </text>
+            </svg>
+          </div>
+
+          <div
+            class="logo-container dark-mode"
+            id="home-dark"
+            style="display: none"
+          >
+            <svg
+              width="300"
+              height="80"
+              viewBox="0 0 240 60"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <linearGradient
+                  id="logoGradient2Dark"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
+                  <stop offset="0%" stop-color="#4FACFE" />
+                  <stop offset="100%" stop-color="#00E676" />
+                </linearGradient>
+              </defs>
+
+              <!-- Home-shaped blockchain icon -->
+              <g class="logo-icon">
+                <!-- House outline -->
+                <path
+                  d="M10,40 L10,25 L30,10 L50,25 L50,40 L40,40 L40,30 L20,30 L20,40 Z"
+                  fill="url(#logoGradient2Dark)"
+                  class="home-shape"
+                />
+
+                <!-- Door -->
+                <rect
+                  x="25"
+                  y="30"
+                  width="10"
+                  height="10"
+                  fill="#FFFFFF"
+                  opacity="0.7"
+                />
+
+                <!-- Window -->
+                <rect
+                  x="15"
+                  y="20"
+                  width="8"
+                  height="8"
+                  rx="1"
+                  fill="#FFFFFF"
+                  opacity="0.7"
+                />
+                <rect
+                  x="37"
+                  y="20"
+                  width="8"
+                  height="8"
+                  rx="1"
+                  fill="#FFFFFF"
+                  opacity="0.7"
+                />
+
+                <!-- Circuit pattern overlay -->
+                <path
+                  d="M15,25 L25,17 L35,25 M25,17 L25,10 M35,25 L45,25"
+                  fill="none"
+                  stroke="#FFFFFF"
+                  stroke-width="1"
+                  opacity="0.5"
+                  class="circuit-pattern"
+                />
+
+                <!-- Connection nodes -->
+                <circle cx="10" cy="25" r="2" fill="#FFFFFF" class="node" />
+                <circle cx="30" cy="10" r="2" fill="#FFFFFF" class="node" />
+                <circle cx="50" cy="25" r="2" fill="#FFFFFF" class="node" />
+                <circle cx="40" cy="40" r="2" fill="#FFFFFF" class="node" />
+                <circle cx="10" cy="40" r="2" fill="#FFFFFF" class="node" />
+
+                <!-- Digital circuit line -->
+                <line
+                  x1="50"
+                  y1="30"
+                  x2="65"
+                  y2="30"
+                  stroke="#00E676"
+                  stroke-width="1.5"
+                  class="circuit-line"
+                />
+              </g>
+
+              <!-- Text -->
+              <text
+                x="75"
+                y="35"
+                font-family="Arial, sans-serif"
+                font-weight="bold"
+                font-size="24"
+                fill="#4FACFE"
+                class="logo-text"
+              >
+                HomeFax
+              </text>
+            </svg>
+          </div>
+
+          <p class="logo-description">
+            This design directly incorporates a house shape to represent real
+            estate, while adding blockchain elements through circuit patterns,
+            nodes, and animated connections. The house shape makes the logo's
+            connection to real estate immediately clear, while the tech elements
+            emphasize the blockchain aspect.
+          </p>
+          <div class="features">
+            <div class="feature">
+              <span class="feature-icon">✓</span>
+              <span>House shape with windows and door details</span>
+            </div>
+            <div class="feature">
+              <span class="feature-icon">✓</span>
+              <span>Circuit overlay pattern representing blockchain</span>
+            </div>
+            <div class="feature">
+              <span class="feature-icon">✓</span>
+              <span>Enhanced visibility in both light and dark modes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <p>© 2025 HomeFax - Blockchain-based property history platform</p>
+      </footer>
+    </div>
+
+    <script>
+      function setLightMode() {
+        document
+          .querySelectorAll(".light-mode")
+          .forEach((el) => (el.style.display = "flex"));
+        document
+          .querySelectorAll(".dark-mode")
+          .forEach((el) => (el.style.display = "none"));
+        document
+          .querySelectorAll(".toggle-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+        document.querySelectorAll(".toggle-btn")[0].classList.add("active");
+      }
+
+      function setDarkMode() {
+        document
+          .querySelectorAll(".light-mode")
+          .forEach((el) => (el.style.display = "none"));
+        document
+          .querySelectorAll(".dark-mode")
+          .forEach((el) => (el.style.display = "flex"));
+        document
+          .querySelectorAll(".toggle-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+        document.querySelectorAll(".toggle-btn")[1].classList.add("active");
+      }
+    </script>
+  </body>
+</html>

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { ThemeContext } from '../context/ThemeContext';
 
 enum AuthMode {
   SIGNIN = 'signin',
@@ -16,6 +17,8 @@ enum AuthOption {
 
 const AuthPage: React.FC = () => {
   const navigate = useNavigate();
+  const { theme } = useContext(ThemeContext);
+  const isDarkMode = theme === 'dark';
   const [mode, setMode] = useState<AuthMode>(AuthMode.SIGNIN);
   const [authOption, setAuthOption] = useState<AuthOption>(AuthOption.EMAIL);
   const [email, setEmail] = useState('');
@@ -23,6 +26,12 @@ const AuthPage: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [formFocused, setFormFocused] = useState<string | null>(null);
+  
+  // Reset form state when switching auth options
+  useEffect(() => {
+    setError('');
+  }, [authOption]);
   
   const toggleMode = () => {
     setMode(mode === AuthMode.SIGNIN ? AuthMode.SIGNUP : AuthMode.SIGNIN);
@@ -39,6 +48,14 @@ const AuthPage: React.FC = () => {
   
   const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setConfirmPassword(e.target.value);
+  };
+  
+  const handleFocus = (field: string) => {
+    setFormFocused(field);
+  };
+  
+  const handleBlur = () => {
+    setFormFocused(null);
   };
   
   const handleSubmit = (e: React.FormEvent) => {
@@ -106,39 +123,53 @@ const AuthPage: React.FC = () => {
       <Header />
       
       <main className="auth-container">
-        <div className="auth-card">
+        {isDarkMode && (
+          <>
+            <div className="blockchain-connection" style={{ top: '10%', left: '20%', width: '30%' }}></div>
+            <div className="blockchain-connection" style={{ top: '30%', right: '15%', width: '25%', animationDelay: '1s' }}></div>
+            <div className="blockchain-connection" style={{ bottom: '25%', left: '10%', width: '20%', animationDelay: '2s' }}></div>
+          </>
+        )}
+        
+        <div className={`auth-card ${isDarkMode ? 'blockchain-card' : ''}`}>
+          {isDarkMode && (
+            <div className="blockchain-glow"></div>
+          )}
+          
           <div className="auth-header">
-            <h2>{mode === AuthMode.SIGNIN ? 'Sign In' : 'Sign Up'}</h2>
+            <h2 className={isDarkMode ? 'glow-text' : ''}>
+              {mode === AuthMode.SIGNIN ? 'Sign In' : 'Sign Up'}
+            </h2>
             <p>
-              {mode === AuthMode.SIGNIN 
-                ? 'Welcome back! Please sign in to continue.' 
+              {mode === AuthMode.SIGNIN
+                ? 'Welcome back! Please sign in to continue.'
                 : 'Create an account to get started with HomeFax.'}
             </p>
           </div>
           
           <div className="auth-options">
-            <button 
+            <button
               className={`auth-option-btn email-btn ${authOption === AuthOption.EMAIL ? 'active' : ''}`}
               onClick={() => setAuthOption(AuthOption.EMAIL)}
               disabled={isLoading}
             >
-              <i className="icon-email"></i>
+              <span className="auth-option-icon">✉️</span>
               Continue with Email
             </button>
-            <button 
+            <button
               className={`auth-option-btn gmail-btn ${authOption === AuthOption.GMAIL ? 'active' : ''}`}
               onClick={handleGmailAuth}
               disabled={isLoading}
             >
-              <i className="icon-gmail"></i>
+              <span className="auth-option-icon">G</span>
               Continue with Gmail
             </button>
-            <button 
+            <button
               className={`auth-option-btn wallet-btn ${authOption === AuthOption.WALLET ? 'active' : ''}`}
               onClick={handleWalletAuth}
               disabled={isLoading}
             >
-              <i className="icon-wallet"></i>
+              <span className="auth-option-icon">🔐</span>
               Connect Wallet
             </button>
           </div>
@@ -147,44 +178,59 @@ const AuthPage: React.FC = () => {
             <form className="auth-form" onSubmit={handleSubmit}>
               {error && <div className="auth-error">{error}</div>}
               
-              <div className="form-group">
+              <div className={`form-group ${formFocused === 'email' ? 'focused' : ''}`}>
                 <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={handleEmailChange}
-                  placeholder="Enter your email"
-                  required
-                  disabled={isLoading}
-                />
-              </div>
-              
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  id="password"
-                  value={password}
-                  onChange={handlePasswordChange}
-                  placeholder="Enter your password"
-                  required
-                  disabled={isLoading}
-                />
-              </div>
-              
-              {mode === AuthMode.SIGNUP && (
-                <div className="form-group">
-                  <label htmlFor="confirmPassword">Confirm Password</label>
+                <div className="input-container">
+                  <span className="input-icon">✉️</span>
                   <input
-                    type="password"
-                    id="confirmPassword"
-                    value={confirmPassword}
-                    onChange={handleConfirmPasswordChange}
-                    placeholder="Confirm your password"
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={handleEmailChange}
+                    onFocus={() => handleFocus('email')}
+                    onBlur={handleBlur}
+                    placeholder="Enter your email"
                     required
                     disabled={isLoading}
                   />
+                </div>
+              </div>
+              
+              <div className={`form-group ${formFocused === 'password' ? 'focused' : ''}`}>
+                <label htmlFor="password">Password</label>
+                <div className="input-container">
+                  <span className="input-icon">🔒</span>
+                  <input
+                    type="password"
+                    id="password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    onFocus={() => handleFocus('password')}
+                    onBlur={handleBlur}
+                    placeholder="Enter your password"
+                    required
+                    disabled={isLoading}
+                  />
+                </div>
+              </div>
+              
+              {mode === AuthMode.SIGNUP && (
+                <div className={`form-group ${formFocused === 'confirmPassword' ? 'focused' : ''}`}>
+                  <label htmlFor="confirmPassword">Confirm Password</label>
+                  <div className="input-container">
+                    <span className="input-icon">🔒</span>
+                    <input
+                      type="password"
+                      id="confirmPassword"
+                      value={confirmPassword}
+                      onChange={handleConfirmPasswordChange}
+                      onFocus={() => handleFocus('confirmPassword')}
+                      onBlur={handleBlur}
+                      placeholder="Confirm your password"
+                      required
+                      disabled={isLoading}
+                    />
+                  </div>
                 </div>
               )}
               
@@ -195,13 +241,21 @@ const AuthPage: React.FC = () => {
               )}
               
               <button type="submit" className="auth-submit-btn" disabled={isLoading}>
-                {isLoading ? 'Processing...' : mode === AuthMode.SIGNIN ? 'Sign In' : 'Sign Up'}
+                {isLoading ? (
+                  <>
+                    <span className="loading-spinner-inline"></span>
+                    Processing...
+                  </>
+                ) : (
+                  mode === AuthMode.SIGNIN ? 'Sign In' : 'Sign Up'
+                )}
               </button>
             </form>
           )}
           
           {authOption === AuthOption.GMAIL && (
             <div className="auth-message">
+              <div className="auth-message-icon">G</div>
               <p>Redirecting to Google authentication...</p>
               <div className="loading-spinner"></div>
             </div>
@@ -209,9 +263,13 @@ const AuthPage: React.FC = () => {
           
           {authOption === AuthOption.WALLET && (
             <div className="auth-message">
+              <div className="auth-message-icon">🔐</div>
               <p>Please connect your wallet to continue.</p>
               <p className="auth-wallet-note">Make sure you have MetaMask or another Web3 wallet installed.</p>
               <div className="loading-spinner"></div>
+              {isDarkMode && (
+                <div className="blockchain-connection" style={{ bottom: '10%', width: '50%', animationDelay: '0.5s' }}></div>
+              )}
             </div>
           )}
           

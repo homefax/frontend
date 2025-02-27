@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Logo from './Logo';
+import ThemeToggle from './ThemeToggle';
+import { ThemeContext } from '../context/ThemeContext';
+import LogoAlt from './LogoAlt';
 
 const Header: React.FC = () => {
   const location = useLocation();
+  const { theme } = useContext(ThemeContext);
   
   // Check if user is logged in (for demo purposes, we'll assume they are if they're on certain pages)
-  const isLoggedIn = location.pathname === '/dashboard' || 
+  const isLoggedIn = location.pathname === '/dashboard' ||
                      location.pathname === '/reports' ||
                      location.pathname === '/activity' ||
                      location.pathname.startsWith('/properties/');
@@ -16,7 +20,8 @@ const Header: React.FC = () => {
       <div className="header-container">
         <div className="logo-section">
           <Link to="/">
-            <Logo />
+            {/* <Logo /> */}
+            <LogoAlt />
           </Link>
         </div>
         
@@ -30,11 +35,14 @@ const Header: React.FC = () => {
             </li>
           </ul>
           
-          {isLoggedIn ? (
-            <Link to="/dashboard" className="auth-button">My Account</Link>
-          ) : (
-            <Link to="/auth" className="auth-button">Sign In</Link>
-          )}
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            {isLoggedIn ? (
+              <Link to="/dashboard" className="auth-button">My Account</Link>
+            ) : (
+              <Link to="/auth" className="auth-button">Sign In</Link>
+            )}
+            <ThemeToggle />
+          </div>
         </nav>
       </div>
     </header>
