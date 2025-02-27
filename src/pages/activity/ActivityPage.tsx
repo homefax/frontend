@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import { ThemeContext } from '../../context/ThemeContext';
 import './Activity.css';
 
 interface Activity {
@@ -95,6 +96,7 @@ const mockActivities: Activity[] = [
 const ActivityPage: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<'all' | 'purchase' | 'upload' | 'interest' | 'verification' | 'ai_processing'>('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const { theme } = useContext(ThemeContext);
   
   // Filter activities based on active filter and search term
   const filteredActivities = mockActivities.filter(activity => {
@@ -130,12 +132,17 @@ const ActivityPage: React.FC = () => {
       case 'interest':
         return '⭐';
       case 'verification':
-        return '✅';
+        return '✓';
       case 'ai_processing':
         return '🤖';
       default:
         return '📋';
     }
+  };
+
+  // Function to get color class for activity type
+  const getActivityColorClass = (type: Activity['type']) => {
+    return `activity-icon-${type}`;
   };
   
   return (
@@ -146,11 +153,12 @@ const ActivityPage: React.FC = () => {
         <div className="activity-header">
           <h1>Activity</h1>
           <Link to="/dashboard" className="back-to-dashboard">
-            Back to Dashboard
+            <span className="back-icon">←</span> Back to Dashboard
           </Link>
         </div>
         
         <div className="activity-search">
+          <div className="search-icon">🔍</div>
           <input
             type="text"
             placeholder="Search activity"
@@ -158,86 +166,119 @@ const ActivityPage: React.FC = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="search-input"
           />
+          {searchTerm && (
+            <button
+              className="clear-search"
+              onClick={() => setSearchTerm('')}
+              aria-label="Clear search"
+            >
+              ✕
+            </button>
+          )}
         </div>
         
         <div className="activity-filters">
-          <button 
+          <button
             className={activeFilter === 'all' ? 'active' : ''}
             onClick={() => setActiveFilter('all')}
           >
             All Activity
           </button>
-          <button 
+          <button
             className={activeFilter === 'purchase' ? 'active' : ''}
             onClick={() => setActiveFilter('purchase')}
           >
-            Purchases
+            <span className="filter-icon">💰</span> Purchases
           </button>
-          <button 
+          <button
             className={activeFilter === 'upload' ? 'active' : ''}
             onClick={() => setActiveFilter('upload')}
           >
-            Uploads
+            <span className="filter-icon">📤</span> Uploads
           </button>
-          <button 
+          <button
             className={activeFilter === 'interest' ? 'active' : ''}
             onClick={() => setActiveFilter('interest')}
           >
-            Interests
+            <span className="filter-icon">⭐</span> Interests
           </button>
-          <button 
+          <button
             className={activeFilter === 'verification' ? 'active' : ''}
             onClick={() => setActiveFilter('verification')}
           >
-            Verifications
+            <span className="filter-icon">✓</span> Verifications
           </button>
-          <button 
+          <button
             className={activeFilter === 'ai_processing' ? 'active' : ''}
             onClick={() => setActiveFilter('ai_processing')}
           >
-            AI Processing
+            <span className="filter-icon">🤖</span> AI Processing
           </button>
         </div>
         
         {sortedDates.length === 0 ? (
-          <div className="no-activity">
+          <div className={`no-activity ${theme === 'dark' ? 'blockchain-card' : ''}`}>
+            {theme === 'dark' && <div className="blockchain-glow"></div>}
+            <div className="empty-state-icon">📋</div>
             <p>No activity found matching your criteria.</p>
+            <button
+              className="reset-filters-btn"
+              onClick={() => {
+                setActiveFilter('all');
+                setSearchTerm('');
+              }}
+            >
+              Reset Filters
+            </button>
           </div>
         ) : (
-          <div className="activity-timeline">
-            {sortedDates.map(date => (
-              <div key={date} className="activity-day">
-                <div className="activity-date">{date}</div>
-                <div className="activity-items">
-                  {groupedActivities[date].map(activity => (
-                    <div key={activity.id} className="activity-item">
-                      <div className={`activity-icon ${activity.type}`}>
-                        {getActivityIcon(activity.type)}
-                      </div>
-                      <div className="activity-content">
-                        <div className="activity-description">{activity.description}</div>
-                        <div className="activity-time">
-                          {new Date(activity.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                        </div>
-                        <div className="activity-links">
-                          {activity.propertyId && (
-                            <Link to={`/properties/${activity.propertyId}`} className="activity-link">
-                              View Property
-                            </Link>
-                          )}
-                          {activity.reportId && (
-                            <Link to={`/reports?id=${activity.reportId}`} className="activity-link">
-                              View Report
-                            </Link>
+          <>
+            <div className="activity-count">
+              Showing {filteredActivities.length} {filteredActivities.length === 1 ? 'activity' : 'activities'}
+              {activeFilter !== 'all' && ` • ${activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1).replace('_', ' ')}`}
+              {searchTerm && ` • Search: "${searchTerm}"`}
+            </div>
+            <div className="activity-timeline">
+              {sortedDates.map(date => (
+                <div key={date} className="activity-day">
+                  <div className="activity-date">
+                    <span className="date-icon">📅</span> {date}
+                  </div>
+                  <div className="activity-items">
+                    {groupedActivities[date].map(activity => (
+                      <div key={activity.id} className={`activity-item ${theme === 'dark' ? 'blockchain-card' : ''}`}>
+                        {theme === 'dark' && <div className="blockchain-glow"></div>}
+                        <div className={`activity-icon ${getActivityColorClass(activity.type)}`}>
+                          {getActivityIcon(activity.type)}
+                          {theme === 'dark' && activity.type === 'verification' && (
+                            <div className="verification-pulse"></div>
                           )}
                         </div>
+                        <div className="activity-content">
+                          <div className="activity-description">{activity.description}</div>
+                          <div className="activity-time">
+                            <span className="time-icon">🕒</span> {new Date(activity.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          </div>
+                          <div className="activity-links">
+                            {activity.propertyId && (
+                              <Link to={`/properties/${activity.propertyId}`} className="activity-link">
+                                <span className="link-icon">🏠</span> View Property
+                              </Link>
+                            )}
+                            {activity.reportId && (
+                              <Link to={`/reports?id=${activity.reportId}`} className="activity-link">
+                                <span className="link-icon">📄</span> View Report
+                              </Link>
+                            )}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </>
         )}
       </main>
       

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import { ThemeContext } from '../../context/ThemeContext';
 import './Reports.css';
 
 interface Report {
@@ -92,6 +93,7 @@ const mockReports: Report[] = [
 const ReportsPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'all' | 'interested' | 'purchased' | 'uploaded' | 'verified'>('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const { theme } = useContext(ThemeContext);
   
   // Filter reports based on active tab and search term
   const filteredReports = mockReports.filter(report => {
@@ -102,6 +104,24 @@ const ReportsPage: React.FC = () => {
     
     return matchesTab && matchesSearch;
   });
+
+  // Get icon for report type
+  const getReportTypeIcon = (type: string) => {
+    switch (type) {
+      case 'inspection':
+        return '🔍';
+      case 'title':
+        return '📜';
+      case 'renovation':
+        return '🔨';
+      case 'environmental':
+        return '🌿';
+      case 'valuation':
+        return '💰';
+      default:
+        return '📄';
+    }
+  };
   
   return (
     <div className="reports-page">
@@ -111,11 +131,12 @@ const ReportsPage: React.FC = () => {
         <div className="reports-header">
           <h1>Reports</h1>
           <Link to="/dashboard" className="back-to-dashboard">
-            Back to Dashboard
+            <span className="back-icon">←</span> Back to Dashboard
           </Link>
         </div>
         
         <div className="reports-search">
+          <div className="search-icon">🔍</div>
           <input
             type="text"
             placeholder="Search reports by title, address, or type"
@@ -123,85 +144,131 @@ const ReportsPage: React.FC = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="search-input"
           />
+          {searchTerm && (
+            <button
+              className="clear-search"
+              onClick={() => setSearchTerm('')}
+              aria-label="Clear search"
+            >
+              ✕
+            </button>
+          )}
         </div>
         
         <div className="reports-tabs">
-          <button 
+          <button
             className={activeTab === 'all' ? 'active' : ''}
             onClick={() => setActiveTab('all')}
           >
             All Reports
           </button>
-          <button 
+          <button
             className={activeTab === 'interested' ? 'active' : ''}
             onClick={() => setActiveTab('interested')}
           >
-            Interested
+            <span className="tab-icon">⭐</span> Interested
           </button>
-          <button 
+          <button
             className={activeTab === 'purchased' ? 'active' : ''}
             onClick={() => setActiveTab('purchased')}
           >
-            Purchased
+            <span className="tab-icon">💰</span> Purchased
           </button>
-          <button 
+          <button
             className={activeTab === 'uploaded' ? 'active' : ''}
             onClick={() => setActiveTab('uploaded')}
           >
-            Uploaded
+            <span className="tab-icon">📤</span> Uploaded
           </button>
-          <button 
+          <button
             className={activeTab === 'verified' ? 'active' : ''}
             onClick={() => setActiveTab('verified')}
           >
-            Verified
+            <span className="tab-icon">✓</span> Verified
           </button>
         </div>
         
         {filteredReports.length === 0 ? (
           <div className="no-reports">
+            <div className="empty-state-icon">📋</div>
             <p>No reports found matching your criteria.</p>
+            <button
+              className="reset-filters-btn"
+              onClick={() => {
+                setActiveTab('all');
+                setSearchTerm('');
+              }}
+            >
+              Reset Filters
+            </button>
           </div>
         ) : (
-          <div className="reports-grid">
-            {filteredReports.map(report => (
-              <div key={report.id} className="report-card">
-                <div className="report-header">
-                  <h3>{report.title}</h3>
-                  <span className={`report-type ${report.type}`}>{report.type}</span>
-                </div>
-                <div className="report-property">
-                  <Link to={`/properties/${report.propertyId}`}>
-                    {report.propertyAddress}
-                  </Link>
-                </div>
-                <div className="report-date">
-                  Date: {new Date(report.date).toLocaleDateString()}
-                </div>
-                <div className="report-status">
-                  <span className={`status-badge ${report.status}`}>
-                    {report.status.charAt(0).toUpperCase() + report.status.slice(1)}
-                  </span>
-                </div>
-                <div className="report-actions">
-                  {report.status === 'interested' && (
-                    <button className="purchase-btn">Purchase</button>
-                  )}
-                  {report.status === 'purchased' && (
-                    <button className="view-btn">View Report</button>
-                  )}
-                  {report.status === 'uploaded' && (
-                    <div className="uploaded-badge">Uploaded by you</div>
-                  )}
-                  {report.status === 'verified' && (
-                    <div className="verified-badge">
-                      <span className="verified-icon">✓</span> Blockchain Verified
+          <>
+            <div className="reports-count">
+              Showing {filteredReports.length} {filteredReports.length === 1 ? 'report' : 'reports'}
+              {activeTab !== 'all' && ` • ${activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}`}
+              {searchTerm && ` • Search: "${searchTerm}"`}
+            </div>
+            <div className="reports-grid">
+              {filteredReports.map(report => (
+                <div key={report.id} className={`report-card ${theme === 'dark' ? 'blockchain-card' : ''}`}>
+                  {theme === 'dark' && <div className="blockchain-glow"></div>}
+                  <div className="report-header">
+                    <div className="report-type-icon">
+                      {getReportTypeIcon(report.type)}
                     </div>
-                  )}
+                    <div className="report-title-section">
+                      <h3>{report.title}</h3>
+                      <span className={`report-type ${report.type}`}>{report.type}</span>
+                    </div>
+                  </div>
+                  <div className="report-property">
+                    <div className="property-icon">🏠</div>
+                    <Link to={`/properties/${report.propertyId}`}>
+                      {report.propertyAddress}
+                    </Link>
+                  </div>
+                  <div className="report-date">
+                    <div className="date-icon">📅</div>
+                    {new Date(report.date).toLocaleDateString()}
+                  </div>
+                  <div className="report-status">
+                    <span className={`status-badge ${report.status}`}>
+                      {report.status === 'interested' && '⭐'}
+                      {report.status === 'purchased' && '💰'}
+                      {report.status === 'uploaded' && '📤'}
+                      {report.status === 'verified' && '✓'}
+                      {' '}
+                      {report.status.charAt(0).toUpperCase() + report.status.slice(1)}
+                    </span>
+                  </div>
+                  <div className="report-actions">
+                    {report.status === 'interested' && (
+                      <button className="purchase-btn">
+                        <span className="btn-icon">💰</span> Purchase
+                      </button>
+                    )}
+                    {report.status === 'purchased' && (
+                      <button className="view-btn">
+                        <span className="btn-icon">👁️</span> View Report
+                      </button>
+                    )}
+                    {report.status === 'uploaded' && (
+                      <div className="uploaded-badge">
+                        <span className="badge-icon">📤</span> Uploaded by you
+                      </div>
+                    )}
+                    {report.status === 'verified' && (
+                      <div className="verified-badge">
+                        <span className="verified-icon">✓</span> Blockchain Verified
+                        {theme === 'dark' && <div className="verification-pulse"></div>}
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </>
         )}
       </main>
       
