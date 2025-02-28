@@ -1,46 +1,50 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import Logo from './Logo';
+import ThemeToggle from './ThemeToggle';
+import { ThemeContext } from '../context/ThemeContext';
+import LogoAlt from './LogoAlt';
+import LogoCrypto from './LogoCrypto';
 
-interface HeaderProps {
-  isAuthenticated?: boolean;
-  onLogout?: () => void;
-}
-
-const Header: React.FC<HeaderProps> = ({ isAuthenticated = false, onLogout }) => {
-  const [menuOpen, setMenuOpen] = useState(false);
+const Header: React.FC = () => {
+  const location = useLocation();
+  const { theme } = useContext(ThemeContext);
   
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+  // Check if user is logged in (for demo purposes, we'll assume they are if they're on certain pages)
+  const isLoggedIn = location.pathname === '/dashboard' ||
+                     location.pathname === '/reports' ||
+                     location.pathname === '/activity' ||
+                     location.pathname.startsWith('/properties/');
   
   return (
     <header className="header">
       <div className="header-container">
         <div className="logo-section">
           <Link to="/">
-            <Logo width={50} height={50} />
+            <LogoCrypto />
+            {/* <Logo /> */}
+            {/* <LogoAlt /> */}
           </Link>
         </div>
         
-        <button className="mobile-menu-button" onClick={toggleMenu}>
-          <span className="menu-icon">{menuOpen ? '✕' : '☰'}</span>
-        </button>
-        
-        <nav className={`main-nav ${menuOpen ? 'open' : ''}`}>
+        <nav className="main-nav">
           <ul className="nav-links">
-            <li><Link to="/" className="nav-link">Home</Link></li>
-            <li><Link to="/properties" className="nav-link">Properties</Link></li>
-            <li><Link to="/about" className="nav-link">About</Link></li>
-            {isAuthenticated ? (
-              <>
-                <li><Link to="/dashboard" className="nav-link">Dashboard</Link></li>
-                <li><button onClick={onLogout} className="nav-link">Logout</button></li>
-              </>
-            ) : (
-              <li><Link to="/auth" className="nav-link auth-button">Sign In / Sign Up</Link></li>
-            )}
+            <li>
+              <Link to="/" className="nav-link">Home</Link>
+            </li>
+            <li>
+              <Link to="/properties" className="nav-link">Properties</Link>
+            </li>
           </ul>
+          
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            {isLoggedIn ? (
+              <Link to="/dashboard" className="auth-button">My Account</Link>
+            ) : (
+              <Link to="/auth" className="auth-button">Sign In</Link>
+            )}
+            <ThemeToggle />
+          </div>
         </nav>
       </div>
     </header>

@@ -26,7 +26,6 @@ const PropertyDetailsPage: React.FC = () => {
   const [reports, setReports] = useState<Report[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [activeTab, setActiveTab] = useState('overview');
   
   useEffect(() => {
     const fetchPropertyDetails = async () => {
@@ -102,9 +101,6 @@ const PropertyDetailsPage: React.FC = () => {
     );
   }
   
-  const currentYear = new Date().getFullYear();
-  const propertyAge = currentYear - property.yearBuilt;
-  
   return (
     <div className="property-details-page">
       <Header />
@@ -115,7 +111,7 @@ const PropertyDetailsPage: React.FC = () => {
           <p className="property-location">{property.city}, {property.state} {property.zipCode}</p>
         </div>
         
-        <div className="property-images">
+        <div className="property-image-container">
           <img 
             src={property.imageUrl} 
             alt={property.address} 
@@ -123,111 +119,83 @@ const PropertyDetailsPage: React.FC = () => {
           />
         </div>
         
-        <div className="property-tabs">
-          <button 
-            className={`tab-button ${activeTab === 'overview' ? 'active' : ''}`}
-            onClick={() => setActiveTab('overview')}
-          >
-            Overview
-          </button>
-          <button 
-            className={`tab-button ${activeTab === 'reports' ? 'active' : ''}`}
-            onClick={() => setActiveTab('reports')}
-          >
-            HomeFax Reports ({reports.length})
-          </button>
+        <div className="property-info-section">
+          <div className="property-details-grid">
+            <div className="detail-item">
+              <span className="detail-label">Price</span>
+              <span className="detail-value">${property.price.toLocaleString()}</span>
+            </div>
+            <div className="detail-item">
+              <span className="detail-label">Bedrooms</span>
+              <span className="detail-value">{property.bedrooms}</span>
+            </div>
+            <div className="detail-item">
+              <span className="detail-label">Bathrooms</span>
+              <span className="detail-value">{property.bathrooms}</span>
+            </div>
+            <div className="detail-item">
+              <span className="detail-label">Square Feet</span>
+              <span className="detail-value">{property.squareFeet.toLocaleString()}</span>
+            </div>
+            <div className="detail-item">
+              <span className="detail-label">Year Built</span>
+              <span className="detail-value">{property.yearBuilt}</span>
+            </div>
+            <div className="detail-item">
+              <span className="detail-label">Verification</span>
+              <span className="detail-value">
+                {property.isVerified ? 
+                  <span className="verified-badge">Verified on Blockchain</span> : 
+                  'Unverified'}
+              </span>
+            </div>
+          </div>
+          
+          <div className="property-description">
+            <h3>Description</h3>
+            <p>{property.description}</p>
+          </div>
         </div>
         
-        <div className="tab-content">
-          {activeTab === 'overview' && (
-            <div className="overview-tab">
-              <div className="property-details-grid">
-                <div className="detail-item">
-                  <span className="detail-label">Price</span>
-                  <span className="detail-value">${property.price.toLocaleString()}</span>
-                </div>
-                <div className="detail-item">
-                  <span className="detail-label">Bedrooms</span>
-                  <span className="detail-value">{property.bedrooms}</span>
-                </div>
-                <div className="detail-item">
-                  <span className="detail-label">Bathrooms</span>
-                  <span className="detail-value">{property.bathrooms}</span>
-                </div>
-                <div className="detail-item">
-                  <span className="detail-label">Square Feet</span>
-                  <span className="detail-value">{property.squareFeet.toLocaleString()}</span>
-                </div>
-                <div className="detail-item">
-                  <span className="detail-label">Year Built</span>
-                  <span className="detail-value">{property.yearBuilt} ({propertyAge} years old)</span>
-                </div>
-                <div className="detail-item">
-                  <span className="detail-label">Verification</span>
-                  <span className="detail-value">
-                    {property.isVerified ? 
-                      <span className="verified-badge">Verified on Blockchain</span> : 
-                      'Unverified'}
-                  </span>
-                </div>
-              </div>
-              
-              <div className="property-description">
-                <h3>Description</h3>
-                <p>{property.description}</p>
-              </div>
+        <div className="property-reports-section">
+          <h3>HomeFax Reports</h3>
+          {reports.length === 0 ? (
+            <div className="no-reports">
+              <p>No reports available for this property yet.</p>
             </div>
-          )}
-          
-          {activeTab === 'reports' && (
-            <div className="reports-tab">
-              <div className="reports-intro">
-                <h3>HomeFax Reports</h3>
-                <p>
-                  Access verified property reports secured on the blockchain. 
-                  Each report provides valuable insights into the property's history.
-                </p>
-              </div>
-              
-              {reports.length === 0 ? (
-                <div className="no-reports">
-                  <p>No reports available for this property yet.</p>
+          ) : (
+            <div className="reports-list">
+              {reports.map(report => (
+                <div key={report.id} className="report-card">
+                  <div className="report-header">
+                    <h4>{report.title}</h4>
+                    {report.isVerified && (
+                      <span className="verified-badge">Blockchain Verified</span>
+                    )}
+                  </div>
+                  
+                  <div className="report-details">
+                    <p className="report-date">Date: {new Date(report.createdAt).toLocaleDateString()}</p>
+                    <p className="report-description">{report.description}</p>
+                  </div>
+                  
+                  <div className="report-actions">
+                    {report.purchased ? (
+                      <button className="view-report-btn">View Report</button>
+                    ) : (
+                      <div className="purchase-section">
+                        <span className="report-price">${report.price}</span>
+                        <button 
+                          className="purchase-report-btn"
+                          onClick={() => handlePurchaseReport(report.id)}
+                        >
+                          Purchase
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              ) : (
-                <div className="reports-list">
-                  {reports.map(report => (
-                    <div key={report.id} className="report-card">
-                      <div className="report-header">
-                        <h4>{report.title}</h4>
-                        {report.isVerified && (
-                          <span className="verified-badge">Blockchain Verified</span>
-                        )}
-                      </div>
-                      
-                      <div className="report-details">
-                        <p className="report-date">Date: {new Date(report.createdAt).toLocaleDateString()}</p>
-                        <p className="report-description">{report.description}</p>
-                      </div>
-                      
-                      <div className="report-actions">
-                        {report.purchased ? (
-                          <button className="view-report-btn">View Report</button>
-                        ) : (
-                          <div className="purchase-section">
-                            <span className="report-price">${report.price}</span>
-                            <button 
-                              className="purchase-report-btn"
-                              onClick={() => handlePurchaseReport(report.id)}
-                            >
-                              Purchase
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
+              ))}
             </div>
           )}
         </div>

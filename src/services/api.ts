@@ -1,3 +1,4 @@
+import { USE_MOCK_DATA, API_BASE_URL } from "../config";
 // Import mock data
 // We need to use require instead of import to avoid TypeScript errors
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -23,13 +24,9 @@ export interface Property {
   updatedAt: string;
 }
 
-// Check if we should use mock data
-// For development, we'll always use mock data
-const useMockData = true;
-
 // Simple fetch wrapper
 const fetchAPI = async (url: string, options?: RequestInit) => {
-  const response = await fetch(url, options);
+  const response = await fetch(`${API_BASE_URL}${url}`, options);
   if (!response.ok) {
     throw new Error(`API error: ${response.status}`);
   }
@@ -41,7 +38,7 @@ export const apiService = {
   // Auth endpoints
   auth: {
     login: async (email: string, password: string) => {
-      if (useMockData) {
+      if (USE_MOCK_DATA) {
         // Simulate API delay
         await new Promise((resolve) => setTimeout(resolve, 1000));
         // Return mock data
@@ -68,7 +65,7 @@ export const apiService = {
     },
 
     register: async (userData: any) => {
-      if (useMockData) {
+      if (USE_MOCK_DATA) {
         // Simulate API delay
         await new Promise((resolve) => setTimeout(resolve, 1000));
         // Return mock data
@@ -94,7 +91,7 @@ export const apiService = {
     },
 
     loginWithGmail: async () => {
-      if (useMockData) {
+      if (USE_MOCK_DATA) {
         // Simulate API delay
         await new Promise((resolve) => setTimeout(resolve, 1000));
         // Return mock data
@@ -123,7 +120,7 @@ export const apiService = {
     },
 
     loginWithWallet: async (walletAddress: string) => {
-      if (useMockData) {
+      if (USE_MOCK_DATA) {
         // Simulate API delay
         await new Promise((resolve) => setTimeout(resolve, 1000));
         // Return mock data
@@ -154,7 +151,7 @@ export const apiService = {
     },
 
     getProfile: async () => {
-      if (useMockData) {
+      if (USE_MOCK_DATA) {
         // Simulate API delay
         await new Promise((resolve) => setTimeout(resolve, 1000));
         // Return mock data
@@ -176,7 +173,7 @@ export const apiService = {
   // Properties endpoints
   properties: {
     getAll: async (params?: any) => {
-      if (useMockData) {
+      if (USE_MOCK_DATA) {
         // Simulate API delay
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -222,7 +219,7 @@ export const apiService = {
     },
 
     getById: async (id: string) => {
-      if (useMockData) {
+      if (USE_MOCK_DATA) {
         // Simulate API delay
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -241,7 +238,7 @@ export const apiService = {
     },
 
     create: async (propertyData: Partial<Property>) => {
-      if (useMockData) {
+      if (USE_MOCK_DATA) {
         // Simulate API delay
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -272,7 +269,7 @@ export const apiService = {
     },
 
     update: async (id: string, propertyData: Partial<Property>) => {
-      if (useMockData) {
+      if (USE_MOCK_DATA) {
         // Simulate API delay
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -311,7 +308,7 @@ export const apiService = {
     },
 
     delete: async (id: string) => {
-      if (useMockData) {
+      if (USE_MOCK_DATA) {
         // Simulate API delay
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -343,7 +340,7 @@ export const apiService = {
   // Reports endpoints
   reports: {
     getByPropertyId: async (propertyId: string) => {
-      if (useMockData) {
+      if (USE_MOCK_DATA) {
         // Simulate API delay
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -419,7 +416,7 @@ export const apiService = {
     },
 
     purchase: async (reportId: string, paymentData: any) => {
-      if (useMockData) {
+      if (USE_MOCK_DATA) {
         // Simulate API delay
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -451,7 +448,7 @@ export const apiService = {
     },
 
     getContent: async (reportId: string) => {
-      if (useMockData) {
+      if (USE_MOCK_DATA) {
         // Simulate API delay
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
