@@ -4,6 +4,7 @@ import Logo from './Logo';
 import ThemeToggle from './ThemeToggle';
 import { ThemeContext } from '../context/ThemeContext';
 import LogoAlt from './LogoAlt';
+import LogoCrypto from './LogoCrypto';
 
 const Header: React.FC = () => {
   const location = useLocation();
@@ -20,8 +21,9 @@ const Header: React.FC = () => {
       <div className="header-container">
         <div className="logo-section">
           <Link to="/">
+            <LogoCrypto />
             {/* <Logo /> */}
-            <LogoAlt />
+            {/* <LogoAlt /> */}
           </Link>
         </div>
         

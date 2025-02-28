@@ -3,18 +3,18 @@
   overflow: visible;
 }
 
-/* Pulse animation for the hexagon */
+/* Pulse animation for the house */
 @keyframes pulse {
   0% {
-    opacity: 0.8;
+    opacity: 0.95;
     transform: scale(1);
   }
   50% {
     opacity: 1;
-    transform: scale(1.05);
+    transform: scale(1.02);
   }
   100% {
-    opacity: 0.8;
+    opacity: 0.95;
     transform: scale(1);
   }
 }
@@ -58,9 +58,65 @@
   }
 }
 
+/* Blockchain overlay animation */
+@keyframes blockchainPulse {
+  0% {
+    opacity: 0.5;
+    stroke-width: 0.8;
+  }
+  50% {
+    opacity: 0.9;
+    stroke-width: 1.2;
+  }
+  100% {
+    opacity: 0.5;
+    stroke-width: 0.8;
+  }
+}
+
+/* Letter animation */
+@keyframes letterGlow {
+  0% {
+    stroke-width: 3;
+    opacity: 0.9;
+  }
+  50% {
+    stroke-width: 3.5;
+    opacity: 1;
+  }
+  100% {
+    stroke-width: 3;
+    opacity: 0.9;
+  }
+}
+
+/* Roof shine animation */
+@keyframes roofShine {
+  0% {
+    stroke-opacity: 0.8;
+  }
+  50% {
+    stroke-opacity: 1;
+  }
+  100% {
+    stroke-opacity: 0.8;
+  }
+}
+
 /* Apply animations to SVG elements */
 .logo-icon {
-  animation: pulse 4s infinite ease-in-out;
+  animation: pulse 5s infinite ease-in-out;
+  will-change: transform, opacity;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.house-roof {
+  animation: roofShine 3s infinite ease-in-out;
+}
+
+.blockchain-overlay {
+  animation: blockchainPulse 5s infinite ease-in-out;
 }
 
 .circuit-line {
@@ -93,6 +149,17 @@
   animation-delay: 2.5s;
 }
 
+/* Letter animations */
+.letter-h, .letter-f {
+  animation: letterGlow 3s infinite ease-in-out;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.letter-f {
+  animation-delay: 1.5s;
+}
+
 .logo-container svg {
   animation: glow 4s infinite ease-in-out;
 }
@@ -103,9 +170,14 @@
   transition: filter 0.3s ease;
 }
 
-.logo-container:hover .hexagon-shape {
-  transform: scale(1.05);
+.logo-container:hover .house-base {
+  transform: scale(1.03);
   transition: transform 0.3s ease;
+}
+
+.logo-container:hover .house-roof {
+  stroke-width: 3;
+  transition: stroke-width 0.3s ease;
 }
 
 .logo-text {

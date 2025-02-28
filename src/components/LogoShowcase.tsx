@@ -1,80 +1,119 @@
 import React, { useState } from 'react';
 import Logo from './Logo';
 import LogoAlt from './LogoAlt';
+import LogoCrypto from './LogoCrypto';
 
-const LogoShowcase: React.FC = () => {
-  const [selectedLogo, setSelectedLogo] = useState<'hexagon' | 'home'>('hexagon');
+interface LogoShowcaseProps {
+  showTagline?: boolean;
+}
+
+const LogoShowcase: React.FC<LogoShowcaseProps> = ({ showTagline = true }) => {
+  const [selectedLogo, setSelectedLogo] = useState<'standard' | 'alt' | 'crypto'>('standard');
+
+  const logoStyle = {
+    margin: '20px 0',
+    padding: '20px',
+    borderRadius: '8px',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+    backgroundColor: 'var(--card-bg, white)',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+  };
+
+  const containerStyle = {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    alignItems: 'center',
+    maxWidth: '800px',
+    margin: '0 auto',
+    padding: '20px',
+  };
+
+  const buttonGroupStyle = {
+    display: 'flex',
+    gap: '10px',
+    marginBottom: '20px',
+  };
+
+  const buttonStyle = (isActive: boolean) => ({
+    padding: '8px 16px',
+    borderRadius: '4px',
+    border: 'none',
+    backgroundColor: isActive ? 'var(--primary-color, #4FACFE)' : 'var(--button-bg, #e0e0e0)',
+    color: isActive ? 'white' : 'var(--text-color, #333)',
+    cursor: 'pointer',
+    fontWeight: isActive ? 'bold' : 'normal',
+    transition: 'background-color 0.3s ease, color 0.3s ease',
+  });
+
+  const titleStyle = {
+    fontSize: '1.5rem',
+    marginBottom: '10px',
+    color: 'var(--heading-color, #2A5082)',
+  };
+
+  const descriptionStyle = {
+    fontSize: '0.9rem',
+    textAlign: 'center' as const,
+    maxWidth: '600px',
+    color: 'var(--text-color, #666)',
+    marginBottom: '20px',
+  };
 
   return (
-    <div style={{ 
-      display: 'flex', 
-      flexDirection: 'column', 
-      alignItems: 'center', 
-      gap: '20px',
-      padding: '30px',
-      maxWidth: '800px',
-      margin: '0 auto',
-      backgroundColor: 'white',
-      borderRadius: '10px',
-      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)'
-    }}>
-      <h2 style={{ color: '#2A5082', marginBottom: '20px' }}>HomeFax Logo Options</h2>
-      
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        gap: '40px',
-        flexWrap: 'wrap'
-      }}>
-        <div style={{ 
-          display: 'flex', 
-          flexDirection: 'column', 
-          alignItems: 'center',
-          padding: '20px',
-          border: selectedLogo === 'hexagon' ? '2px solid #4FACFE' : '2px solid transparent',
-          borderRadius: '8px',
-          cursor: 'pointer',
-          transition: 'all 0.3s ease'
-        }} 
-        onClick={() => setSelectedLogo('hexagon')}
+    <div style={containerStyle}>
+      <h2 style={titleStyle}>HomeFax Logo Variants</h2>
+      <p style={descriptionStyle}>
+        Choose between different logo styles for the HomeFax platform.
+      </p>
+
+      <div style={buttonGroupStyle}>
+        <button 
+          style={buttonStyle(selectedLogo === 'standard')}
+          onClick={() => setSelectedLogo('standard')}
         >
-          <h3 style={{ marginBottom: '15px', color: '#2A5082' }}>Option 1: Blockchain Hexagon</h3>
-          <Logo width={300} height={80} />
-        </div>
-        
-        <div style={{ 
-          display: 'flex', 
-          flexDirection: 'column', 
-          alignItems: 'center',
-          padding: '20px',
-          border: selectedLogo === 'home' ? '2px solid #4FACFE' : '2px solid transparent',
-          borderRadius: '8px',
-          cursor: 'pointer',
-          transition: 'all 0.3s ease'
-        }} 
-        onClick={() => setSelectedLogo('home')}
+          Standard Logo
+        </button>
+        <button 
+          style={buttonStyle(selectedLogo === 'alt')}
+          onClick={() => setSelectedLogo('alt')}
         >
-          <h3 style={{ marginBottom: '15px', color: '#2A5082' }}>Option 2: Blockchain Home</h3>
-          <LogoAlt width={300} height={80} />
-        </div>
+          Alternative Logo
+        </button>
+        <button 
+          style={buttonStyle(selectedLogo === 'crypto')}
+          onClick={() => setSelectedLogo('crypto')}
+        >
+          Crypto Logo
+        </button>
       </div>
-      
-      <div style={{ 
-        marginTop: '30px', 
-        padding: '20px', 
-        backgroundColor: '#f5f7fa', 
-        borderRadius: '8px',
-        width: '100%'
-      }}>
-        <h3 style={{ marginBottom: '10px', color: '#2A5082' }}>Selected Logo: {selectedLogo === 'hexagon' ? 'Blockchain Hexagon' : 'Blockchain Home'}</h3>
-        <p style={{ marginBottom: '20px', color: '#666' }}>
-          Both logos incorporate blockchain elements with the HomeFax branding. 
-          The hexagon represents blockchain technology with its geometric pattern, 
-          while the home shape directly relates to real estate with blockchain circuit elements.
-        </p>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          {selectedLogo === 'hexagon' ? <Logo width={350} height={100} /> : <LogoAlt width={350} height={100} />}
-        </div>
+
+      <div style={logoStyle}>
+        {selectedLogo === 'standard' && (
+          <div>
+            <Logo showTagline={showTagline} width={300} height={100} />
+            <p style={descriptionStyle}>
+              The standard HomeFax logo featuring a house with blockchain elements.
+            </p>
+          </div>
+        )}
+        
+        {selectedLogo === 'alt' && (
+          <div>
+            <LogoAlt showTagline={showTagline} width={300} height={100} />
+            <p style={descriptionStyle}>
+              An alternative version of the HomeFax logo with a different house design.
+            </p>
+          </div>
+        )}
+        
+        {selectedLogo === 'crypto' && (
+          <div>
+            <LogoCrypto showTagline={showTagline} width={300} height={100} />
+            <p style={descriptionStyle}>
+              A blockchain-inspired logo featuring the letters H and F in a hexagonal design.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

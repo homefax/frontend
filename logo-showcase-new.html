@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HomeFax - New Logo Showcase</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .theme-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #4facfe;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .showcase {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+      }
+
+      .logo-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2rem;
+      }
+
+      .logo-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .logo-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .logo-title {
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+      }
+
+      .logo-description {
+        text-align: center;
+        max-width: 300px;
+        font-size: 0.9rem;
+        opacity: 0.8;
+      }
+
+      /* Light theme (default) */
+      body {
+        background-color: #f8f9fa;
+        color: #333;
+      }
+
+      .logo-container {
+        background-color: white;
+      }
+
+      /* Dark theme */
+      body.dark-theme {
+        background-color: #1a1a2e;
+        color: #f8f9fa;
+      }
+
+      body.dark-theme .logo-container {
+        background-color: #16213e;
+      }
+
+      /* Logo CSS */
+      .logo-svg-container {
+        position: relative;
+        overflow: visible;
+      }
+
+      /* Pulse animation for the house */
+      @keyframes pulse {
+        0% {
+          opacity: 0.8;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.03);
+        }
+        100% {
+          opacity: 0.8;
+          transform: scale(1);
+        }
+      }
+
+      /* Glow effect for the logo */
+      @keyframes glow {
+        0% {
+          filter: drop-shadow(0 0 2px rgba(79, 172, 254, 0.3));
+        }
+        50% {
+          filter: drop-shadow(0 0 5px rgba(79, 172, 254, 0.6));
+        }
+        100% {
+          filter: drop-shadow(0 0 2px rgba(79, 172, 254, 0.3));
+        }
+      }
+
+      /* Node pulse animation */
+      @keyframes nodePulse {
+        0% {
+          r: 1.5;
+          opacity: 0.7;
+        }
+        50% {
+          r: 2.5;
+          opacity: 1;
+        }
+        100% {
+          r: 1.5;
+          opacity: 0.7;
+        }
+      }
+
+      /* Circuit line animation */
+      @keyframes dash {
+        0% {
+          stroke-dashoffset: 15;
+        }
+        100% {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      /* Blockchain overlay animation */
+      @keyframes blockchainPulse {
+        0% {
+          opacity: 0.4;
+          stroke-width: 0.8;
+        }
+        50% {
+          opacity: 0.8;
+          stroke-width: 1.2;
+        }
+        100% {
+          opacity: 0.4;
+          stroke-width: 0.8;
+        }
+      }
+
+      /* Roof shine animation */
+      @keyframes roofShine {
+        0% {
+          stroke-opacity: 0.8;
+        }
+        50% {
+          stroke-opacity: 1;
+        }
+        100% {
+          stroke-opacity: 0.8;
+        }
+      }
+
+      /* Apply animations to SVG elements */
+      .logo-icon {
+        animation: pulse 4s infinite ease-in-out;
+      }
+
+      .house-roof {
+        animation: roofShine 3s infinite ease-in-out;
+      }
+
+      .blockchain-overlay {
+        animation: blockchainPulse 5s infinite ease-in-out;
+      }
+
+      .circuit-line {
+        stroke-dasharray: 15;
+        stroke-dashoffset: 15;
+        animation: dash 2s infinite linear;
+      }
+
+      .node {
+        animation: nodePulse 3s infinite ease-in-out;
+      }
+
+      .node:nth-child(2) {
+        animation-delay: 0.5s;
+      }
+
+      .node:nth-child(3) {
+        animation-delay: 1s;
+      }
+
+      .node:nth-child(4) {
+        animation-delay: 1.5s;
+      }
+
+      .node:nth-child(5) {
+        animation-delay: 2s;
+      }
+
+      .node:nth-child(6) {
+        animation-delay: 2.5s;
+      }
+
+      .logo-svg {
+        animation: glow 4s infinite ease-in-out;
+      }
+    </style>
+  </head>
+  <body>
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+
+    <div class="container">
+      <h1>HomeFax - New Logo Showcase</h1>
+
+      <div class="showcase">
+        <div class="logo-row">
+          <div class="logo-container">
+            <div class="logo-svg-container">
+              <!-- Light Theme Logo -->
+              <svg
+                width="300"
+                height="100"
+                viewBox="0 0 240 80"
+                xmlns="http://www.w3.org/2000/svg"
+                class="logo-svg"
+              >
+                <defs>
+                  <linearGradient
+                    id="logoGradient"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="100%"
+                  >
+                    <stop offset="0%" stop-color="#2A5082" />
+                    <stop offset="100%" stop-color="#4FACFE" />
+                  </linearGradient>
+                  <linearGradient
+                    id="roofGradient"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="100%"
+                  >
+                    <stop offset="0%" stop-color="#4FACFE" />
+                    <stop offset="100%" stop-color="#FF7E3F" />
+                  </linearGradient>
+                </defs>
+
+                <!-- Modern House with Blockchain Elements -->
+                <g class="logo-icon">
+                  <!-- House base -->
+                  <path
+                    d="M12,40 L12,25 L30,12 L48,25 L48,40 Z"
+                    fill="url(#logoGradient)"
+                    class="house-base"
+                    stroke="#2A5082"
+                    stroke-width="0.5"
+                  />
+
+                  <!-- Roof with different gradient -->
+                  <path
+                    d="M12,25 L30,12 L48,25"
+                    fill="none"
+                    stroke="url(#roofGradient)"
+                    stroke-width="2.5"
+                    class="house-roof"
+                  />
+
+                  <!-- Door -->
+                  <rect
+                    x="26"
+                    y="30"
+                    width="8"
+                    height="10"
+                    rx="1"
+                    fill="#2A5082"
+                    opacity="0.8"
+                  />
+
+                  <!-- Windows -->
+                  <rect
+                    x="16"
+                    y="26"
+                    width="7"
+                    height="7"
+                    rx="1"
+                    fill="#2A5082"
+                    opacity="0.8"
+                  />
+                  <rect
+                    x="37"
+                    y="26"
+                    width="7"
+                    height="7"
+                    rx="1"
+                    fill="#2A5082"
+                    opacity="0.8"
+                  />
+
+                  <!-- Blockchain hexagon overlay -->
+                  <path
+                    d="M30,18 L38,22 L38,30 L30,34 L22,30 L22,22 Z"
+                    fill="none"
+                    stroke="#2A5082"
+                    stroke-width="0.8"
+                    opacity="0.6"
+                    class="blockchain-overlay"
+                  />
+
+                  <!-- Connection nodes -->
+                  <circle cx="30" cy="12" r="2" fill="#2A5082" class="node" />
+                  <circle cx="48" cy="25" r="2" fill="#2A5082" class="node" />
+                  <circle cx="48" cy="40" r="2" fill="#2A5082" class="node" />
+                  <circle cx="12" cy="40" r="2" fill="#2A5082" class="node" />
+                  <circle cx="12" cy="25" r="2" fill="#2A5082" class="node" />
+                  <circle cx="30" cy="34" r="2" fill="#2A5082" class="node" />
+
+                  <!-- Digital circuit lines -->
+                  <line
+                    x1="48"
+                    y1="32"
+                    x2="60"
+                    y2="32"
+                    stroke="#4FACFE"
+                    stroke-width="1.5"
+                    class="circuit-line"
+                  />
+                  <line
+                    x1="30"
+                    y1="34"
+                    x2="30"
+                    y2="40"
+                    stroke="#4FACFE"
+                    stroke-width="1"
+                    class="circuit-line"
+                    style="animation-delay: 0.5s"
+                  />
+                </g>
+
+                <!-- Main Text -->
+                <text
+                  x="75"
+                  y="32"
+                  font-family="Arial, sans-serif"
+                  font-weight="bold"
+                  font-size="26"
+                  fill="#2A5082"
+                  class="logo-text"
+                >
+                  HomeFax
+                </text>
+
+                <!-- Tagline -->
+                <text
+                  x="75"
+                  y="50"
+                  font-family="Arial, sans-serif"
+                  font-weight="normal"
+                  font-size="9"
+                  fill="rgba(42, 80, 130, 0.7)"
+                  class="logo-tagline"
+                >
+                  Because Every House Has a Past
+                </text>
+              </svg>
+            </div>
+            <div class="logo-title">Light Theme</div>
+            <div class="logo-description">
+              The new HomeFax logo in light theme, featuring a modern house
+              design with blockchain elements.
+            </div>
+          </div>
+
+          <div class="logo-container">
+            <div class="logo-svg-container">
+              <!-- Dark Theme Logo -->
+              <svg
+                width="300"
+                height="100"
+                viewBox="0 0 240 80"
+                xmlns="http://www.w3.org/2000/svg"
+                class="logo-svg"
+              >
+                <defs>
+                  <linearGradient
+                    id="logoGradientDark"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="100%"
+                  >
+                    <stop offset="0%" stop-color="#4FACFE" />
+                    <stop offset="100%" stop-color="#00E676" />
+                  </linearGradient>
+                  <linearGradient
+                    id="roofGradientDark"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="100%"
+                  >
+                    <stop offset="0%" stop-color="#00E676" />
+                    <stop offset="100%" stop-color="#FF9D66" />
+                  </linearGradient>
+                </defs>
+
+                <!-- Modern House with Blockchain Elements -->
+                <g class="logo-icon">
+                  <!-- House base -->
+                  <path
+                    d="M12,40 L12,25 L30,12 L48,25 L48,40 Z"
+                    fill="url(#logoGradientDark)"
+                    class="house-base"
+                  />
+
+                  <!-- Roof with different gradient -->
+                  <path
+                    d="M12,25 L30,12 L48,25"
+                    fill="none"
+                    stroke="url(#roofGradientDark)"
+                    stroke-width="2.5"
+                    class="house-roof"
+                  />
+
+                  <!-- Door -->
+                  <rect
+                    x="26"
+                    y="30"
+                    width="8"
+                    height="10"
+                    rx="1"
+                    fill="#FFFFFF"
+                    opacity="0.8"
+                  />
+
+                  <!-- Windows -->
+                  <rect
+                    x="16"
+                    y="26"
+                    width="7"
+                    height="7"
+                    rx="1"
+                    fill="#FFFFFF"
+                    opacity="0.8"
+                  />
+                  <rect
+                    x="37"
+                    y="26"
+                    width="7"
+                    height="7"
+                    rx="1"
+                    fill="#FFFFFF"
+                    opacity="0.8"
+                  />
+
+                  <!-- Blockchain hexagon overlay -->
+                  <path
+                    d="M30,18 L38,22 L38,30 L30,34 L22,30 L22,22 Z"
+                    fill="none"
+                    stroke="#FFFFFF"
+                    stroke-width="0.8"
+                    opacity="0.6"
+                    class="blockchain-overlay"
+                  />
+
+                  <!-- Connection nodes -->
+                  <circle cx="30" cy="12" r="2" fill="#FFFFFF" class="node" />
+                  <circle cx="48" cy="25" r="2" fill="#FFFFFF" class="node" />
+                  <circle cx="48" cy="40" r="2" fill="#FFFFFF" class="node" />
+                  <circle cx="12" cy="40" r="2" fill="#FFFFFF" class="node" />
+                  <circle cx="12" cy="25" r="2" fill="#FFFFFF" class="node" />
+                  <circle cx="30" cy="34" r="2" fill="#FFFFFF" class="node" />
+
+                  <!-- Digital circuit lines -->
+                  <line
+                    x1="48"
+                    y1="32"
+                    x2="60"
+                    y2="32"
+                    stroke="#00E676"
+                    stroke-width="1.5"
+                    class="circuit-line"
+                  />
+                  <line
+                    x1="30"
+                    y1="34"
+                    x2="30"
+                    y2="40"
+                    stroke="#00E676"
+                    stroke-width="1"
+                    class="circuit-line"
+                    style="animation-delay: 0.5s"
+                  />
+                </g>
+
+                <!-- Main Text -->
+                <text
+                  x="75"
+                  y="32"
+                  font-family="Arial, sans-serif"
+                  font-weight="bold"
+                  font-size="26"
+                  fill="#4FACFE"
+                  class="logo-text"
+                >
+                  HomeFax
+                </text>
+
+                <!-- Tagline -->
+                <text
+                  x="75"
+                  y="50"
+                  font-family="Arial, sans-serif"
+                  font-weight="normal"
+                  font-size="9"
+                  fill="rgba(255, 255, 255, 0.8)"
+                  class="logo-tagline"
+                >
+                  Because Every House Has a Past
+                </text>
+              </svg>
+            </div>
+            <div class="logo-title">Dark Theme</div>
+            <div class="logo-description">
+              The new HomeFax logo in dark theme, with enhanced colors for
+              better visibility in dark mode.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function toggleTheme() {
+        document.body.classList.toggle("dark-theme");
+      }
+    </script>
+  </body>
+</html>
