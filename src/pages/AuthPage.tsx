@@ -8,7 +8,7 @@
  */
 
 import React, { useState, useContext, useEffect } from 'react';
-import './AuthPage.css'; // Make sure to create this CSS file
+import './AuthPage.css';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -16,6 +16,8 @@ import { ThemeContext } from '../context/ThemeContext';
 import SmartWalletAuth from '../components/SmartWalletAuth';
 import BasenamesRegistration from '../components/BasenamesRegistration';
 import OnchainKitIntegration from '../components/OnchainKitIntegration';
+import { GoogleLogin } from '@react-oauth/google';
+import UserDashboard from '../components/UserDashboard';
 
 enum AuthMode {
   SIGNIN = 'signin',
@@ -49,6 +51,9 @@ const AuthPage: React.FC = () => {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [basename, setBasename] = useState<string | null>(null);
   const [walletCreationStep, setWalletCreationStep] = useState<'wallet' | 'basename' | 'complete'>('wallet');
+  
+  // State for authenticated user
+  const [authenticatedUser, setAuthenticatedUser] = useState<string | null>(null);
   
   // Reset form state when switching auth options
   useEffect(() => {
@@ -127,29 +132,47 @@ const AuthPage: React.FC = () => {
   };
   
   /**
+   * Handle Google OAuth login
+   *
+   * This function simulates authentication with Google OAuth
+   */
+  const handleGoogleLogin = async (credentialResponse: any) => {
+    try {
+      setIsLoading(true);
+      console.log("Received Google credential:", credentialResponse.credential);
+      
+      // Simulate successful authentication
+      setTimeout(() => {
+        // Set authenticated user (would normally extract from JWT)
+        setAuthenticatedUser("0x1234...5678");
+        setIsLoading(false);
+      }, 1000);
+    } catch (error) {
+      console.error("Authentication error:", error);
+      setError("Failed to authenticate with Google. Please try again.");
+      setIsLoading(false);
+    }
+  };
+  
+  /**
    * Handle social media authentication using Okto SDK
    *
    * This function handles authentication for various social media platforms:
    * - Facebook, Twitter, GitHub, Apple, LinkedIn, Discord
    *
-   * The actual implementation would use the Okto SDK to authenticate with these platforms.
-   * For now, we're simulating the authentication process.
+   * For now, we're redirecting all social logins to Google OAuth since that's
+   * what Okto currently supports.
    */
   const handleSocialAuth = (provider: AuthOption) => {
     setAuthOption(provider);
     setIsLoading(true);
     
-    // In a real implementation, we would use the Okto SDK to authenticate
-    // Example: okto.auth.loginWithSocial(provider);
-    
-    // Simulate social authentication with Okto SDK
+    // For now, we'll just show the Google login UI for all social providers
+    // since Okto currently only supports Google OAuth
     setTimeout(() => {
-      console.log(`Authenticating with ${provider}`);
+      console.log(`Preparing to authenticate with ${provider}`);
       setIsLoading(false);
-      
-      // Redirect to dashboard page
-      navigate('/dashboard');
-    }, 1000);
+    }, 500);
   };
   
   const handleWalletAuth = () => {
@@ -361,60 +384,52 @@ const AuthPage: React.FC = () => {
             </form>
           )}
           
-          {authOption === AuthOption.GMAIL && (
-            <div className="auth-message">
-              <div className="auth-message-icon">G</div>
-              <p>Redirecting to Google authentication...</p>
-              <div className="loading-spinner"></div>
-            </div>
-          )}
-          
-          {authOption === AuthOption.FACEBOOK && (
-            <div className="auth-message">
-              <div className="auth-message-icon">f</div>
-              <p>Redirecting to Facebook authentication...</p>
-              <div className="loading-spinner"></div>
-            </div>
-          )}
-          
-          {authOption === AuthOption.TWITTER && (
-            <div className="auth-message">
-              <div className="auth-message-icon">𝕏</div>
-              <p>Redirecting to Twitter authentication...</p>
-              <div className="loading-spinner"></div>
-            </div>
-          )}
-          
-          {authOption === AuthOption.GITHUB && (
-            <div className="auth-message">
-              <div className="auth-message-icon">⌨️</div>
-              <p>Redirecting to GitHub authentication...</p>
-              <div className="loading-spinner"></div>
-            </div>
-          )}
-          
-          {authOption === AuthOption.APPLE && (
-            <div className="auth-message">
-              <div className="auth-message-icon">🍎</div>
-              <p>Redirecting to Apple authentication...</p>
-              <div className="loading-spinner"></div>
-            </div>
-          )}
-          
-          {authOption === AuthOption.LINKEDIN && (
-            <div className="auth-message">
-              <div className="auth-message-icon">in</div>
-              <p>Redirecting to LinkedIn authentication...</p>
-              <div className="loading-spinner"></div>
-            </div>
-          )}
-          
-          {authOption === AuthOption.DISCORD && (
-            <div className="auth-message">
-              <div className="auth-message-icon">🎮</div>
-              <p>Redirecting to Discord authentication...</p>
-              <div className="loading-spinner"></div>
-            </div>
+          {/* If user is already authenticated, show the dashboard */}
+          {authenticatedUser ? (
+            <UserDashboard userAddress={authenticatedUser} />
+          ) : (
+            <>
+              {/* Show Google login button for Gmail auth option */}
+              {authOption === AuthOption.GMAIL && (
+                <div className="auth-message">
+                  <div className="auth-message-icon">G</div>
+                  <p>Sign in with Google</p>
+                  <div className="google-login-container">
+                    <GoogleLogin
+                      onSuccess={handleGoogleLogin}
+                      onError={() => setError("Google login failed. Please try again.")}
+                    />
+                  </div>
+                </div>
+              )}
+              
+              {/* For other social logins, show Google login since that's what we support */}
+              {(authOption === AuthOption.FACEBOOK ||
+                authOption === AuthOption.TWITTER ||
+                authOption === AuthOption.GITHUB ||
+                authOption === AuthOption.APPLE ||
+                authOption === AuthOption.LINKEDIN ||
+                authOption === AuthOption.DISCORD) && (
+                <div className="auth-message">
+                  <div className="auth-message-icon">
+                    {authOption === AuthOption.FACEBOOK && "f"}
+                    {authOption === AuthOption.TWITTER && "𝕏"}
+                    {authOption === AuthOption.GITHUB && "⌨️"}
+                    {authOption === AuthOption.APPLE && "🍎"}
+                    {authOption === AuthOption.LINKEDIN && "in"}
+                    {authOption === AuthOption.DISCORD && "🎮"}
+                  </div>
+                  <p>Sign in with {authOption}</p>
+                  <p className="auth-note">Currently, all social logins are handled through Google OAuth.</p>
+                  <div className="google-login-container">
+                    <GoogleLogin
+                      onSuccess={handleGoogleLogin}
+                      onError={() => setError("Google login failed. Please try again.")}
+                    />
+                  </div>
+                </div>
+              )}
+            </>
           )}
           
           {authOption === AuthOption.WALLET && (

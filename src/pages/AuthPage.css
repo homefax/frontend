@@ -151,3 +151,53 @@
 .blockchain-card .auth-options::-webkit-scrollbar-thumb:hover {
   background: #7f5af0;
 }
+
+/* Google login styles */
+.google-login-container {
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+}
+
+.auth-note {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 10px;
+  font-style: italic;
+}
+
+/* User dashboard styles */
+.user-dashboard {
+  padding: 20px;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.account-card {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.blockchain-card .account-card {
+  background-color: #1a1a2e;
+  border: 1px solid #30305a;
+}
+
+.portfolio-data {
+  background-color: #f1f1f1;
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.blockchain-card .portfolio-data {
+  background-color: #252547;
+  color: #e0e0e0;
+  border: 1px solid #30305a;
+}
