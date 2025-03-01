@@ -1,10 +1,8 @@
 import React, { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import Logo from './Logo';
 import ThemeToggle from './ThemeToggle';
 import { ThemeContext } from '../context/ThemeContext';
-import LogoAlt from './LogoAlt';
-import LogoCrypto from './LogoCrypto';
+import HomeFaxLogo from './HomeFaxLogo';
 
 const Header: React.FC = () => {
   const location = useLocation();
@@ -21,9 +19,7 @@ const Header: React.FC = () => {
       <div className="header-container">
         <div className="logo-section">
           <Link to="/">
-            <LogoCrypto />
-            {/* <Logo /> */}
-            {/* <LogoAlt /> */}
+            <HomeFaxLogo />
           </Link>
         </div>
         

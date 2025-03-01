@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import AddressAutocomplete from '../../components/AddressAutocomplete';
 import './Dashboard.css';
 
 // Mock data for dashboard
@@ -219,20 +220,18 @@ const DashboardPage: React.FC = () => {
               
               <form className="upload-form" onSubmit={handleUploadSubmit}>
                 <div className="form-group">
-                  <label htmlFor="property">Property</label>
-                  <select 
+                  <label htmlFor="property">Property Address</label>
+                  <AddressAutocomplete
                     id="property"
                     value={uploadProperty}
-                    onChange={(e) => setUploadProperty(e.target.value)}
-                    required
-                  >
-                    <option value="">Select a property</option>
-                    <option value="1">123 Blockchain Street, Crypto City, CA</option>
-                    <option value="2">456 Ethereum Avenue, Blockchain Heights, NY</option>
-                    <option value="3">789 Bitcoin Boulevard, DeFi District, TX</option>
-                    <option value="4">101 NFT Lane, Metaverse City, CA</option>
-                    <option value="5">202 Smart Contract Court, Token Town, WA</option>
-                  </select>
+                    onChange={setUploadProperty}
+                    placeholder="Enter property address"
+                    required={true}
+                    className="property-address-input"
+                  />
+                  <p className="address-help">
+                    Start typing to see address suggestions. You can also enter an address manually if needed.
+                  </p>
                 </div>
                 
                 <div className="form-group">
