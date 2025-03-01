@@ -21,11 +21,10 @@ const HomeFaxLogo: React.FC<HomeFaxLogoProps> = ({
   
   // Use the appropriate logo based on the theme
   const logoSrc = isDarkMode
-    ? '/logo-dark.png'
-    : '/logo-light.png';
+    ? '/logo_dark.png'
+    : '/logo_light.png';
   
   // Text colors based on theme
-  const textColor = isDarkMode ? "#4FACFE" : "#2A5082";
   const taglineColor = isDarkMode ? "rgba(255, 255, 255, 0.8)" : "rgba(42, 80, 130, 0.7)";
   
   return (
@@ -46,14 +45,22 @@ const HomeFaxLogo: React.FC<HomeFaxLogoProps> = ({
           xmlns="http://www.w3.org/2000/svg"
           style={{ position: 'absolute', top: 0, left: 0 }}
         >
-          {/* Main Text */}
+          {/* Define the gradient */}
+          <defs>
+            <linearGradient id="logoTextGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#00E676" /> {/* Green (blockchain-accent) */}
+              <stop offset="100%" stopColor="#00A8FF" /> {/* Blue (blockchain-secondary) */}
+            </linearGradient>
+          </defs>
+          
+          {/* Main Text with Gradient */}
           <text
             x="75"
             y="30"
             fontFamily="Arial, sans-serif"
             fontWeight="bold"
             fontSize="24"
-            fill={textColor}
+            fill="url(#logoTextGradient)"
             className="logo-text"
           >
             HomeFax

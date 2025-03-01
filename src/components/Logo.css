@@ -200,7 +200,6 @@
 
 /* Dark mode adjustments */
 [data-theme="dark"] .logo-text {
-  fill: #4FACFE;
   filter: drop-shadow(0 0 3px rgba(79, 172, 254, 0.6));
 }
 
