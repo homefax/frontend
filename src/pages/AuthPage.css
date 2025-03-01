@@ -1,0 +1,153 @@
+/* AuthPage.css */
+
+.auth-options {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  overflow-x: auto;
+  padding: 10px 0;
+}
+
+.auth-option-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid #e0e0e0;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+  flex-shrink: 0;
+  margin: 0 2px;
+}
+
+.auth-option-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.auth-option-btn.active {
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.3);
+}
+
+.auth-option-icon {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Dark mode styles */
+.blockchain-card .auth-option-btn {
+  background-color: #1a1a2e;
+  border-color: #30305a;
+  color: #e0e0e0;
+}
+
+.blockchain-card .auth-option-btn:hover {
+  background-color: #252547;
+}
+
+.blockchain-card .auth-option-btn.active {
+  border-color: #7f5af0;
+  box-shadow: 0 0 0 2px rgba(127, 90, 240, 0.3);
+}
+
+/* Specific button styles */
+.wallet-btn {
+  background-color: #f8f9fa;
+}
+
+.email-btn {
+  background-color: #f8f9fa;
+}
+
+.gmail-btn {
+  background-color: #ea4335;
+  color: white;
+}
+
+.facebook-btn {
+  background-color: #1877f2;
+  color: white;
+}
+
+.twitter-btn {
+  background-color: #000000;
+  color: white;
+}
+
+.github-btn {
+  background-color: #24292e;
+  color: white;
+}
+
+.apple-btn {
+  background-color: #000000;
+  color: white;
+}
+
+.linkedin-btn {
+  background-color: #0a66c2;
+  color: white;
+}
+
+.discord-btn {
+  background-color: #5865f2;
+  color: white;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .auth-options {
+    gap: 8px;
+  }
+  
+  .auth-option-btn {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+  }
+  
+  .auth-option-icon {
+    font-size: 16px;
+  }
+}
+
+/* Horizontal scrolling for auth options */
+.auth-options::-webkit-scrollbar {
+  height: 4px;
+}
+
+.auth-options::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.auth-options::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.auth-options::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Dark mode scrollbar */
+.blockchain-card .auth-options::-webkit-scrollbar-track {
+  background: #1a1a2e;
+}
+
+.blockchain-card .auth-options::-webkit-scrollbar-thumb {
+  background: #30305a;
+}
+
+.blockchain-card .auth-options::-webkit-scrollbar-thumb:hover {
+  background: #7f5af0;
+}
