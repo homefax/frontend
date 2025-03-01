@@ -183,6 +183,14 @@ const AuthPage: React.FC = () => {
           
           <div className="auth-options">
             <button
+              className={`auth-option-btn wallet-btn ${authOption === AuthOption.WALLET ? 'active' : ''}`}
+              onClick={handleWalletAuth}
+              disabled={isLoading}
+            >
+              <span className="auth-option-icon">🔐</span>
+              Crypto Wallet
+            </button>
+            <button
               className={`auth-option-btn email-btn ${authOption === AuthOption.EMAIL ? 'active' : ''}`}
               onClick={() => setAuthOption(AuthOption.EMAIL)}
               disabled={isLoading}
@@ -197,14 +205,6 @@ const AuthPage: React.FC = () => {
             >
               <span className="auth-option-icon">G</span>
               Continue with Gmail
-            </button>
-            <button
-              className={`auth-option-btn wallet-btn ${authOption === AuthOption.WALLET ? 'active' : ''}`}
-              onClick={handleWalletAuth}
-              disabled={isLoading}
-            >
-              <span className="auth-option-icon">🔐</span>
-              Connect Wallet
             </button>
           </div>
           
