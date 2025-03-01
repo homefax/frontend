@@ -122,6 +122,36 @@ const PropertyDetailsPage: React.FC = () => {
     setCurrentReportTitle('');
   };
   
+  const handleDownloadReport = () => {
+    if (!reportContent || !currentReportTitle) return;
+    
+    // In a real app, we would use a PDF generation library like jsPDF
+    // For this mock implementation, we'll create a text file with the content
+    
+    // Create a blob with the content
+    const blob = new Blob([reportContent.content], { type: 'text/plain' });
+    
+    // Create a URL for the blob
+    const url = URL.createObjectURL(blob);
+    
+    // Create a link element
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${currentReportTitle.replace(/\s+/g, '_')}_Report.pdf`;
+    
+    // Append the link to the body
+    document.body.appendChild(a);
+    
+    // Click the link
+    a.click();
+    
+    // Remove the link
+    document.body.removeChild(a);
+    
+    // Revoke the URL
+    URL.revokeObjectURL(url);
+  };
+  
   if (loading) {
     return (
       <div className="property-details-page">
@@ -282,6 +312,12 @@ const PropertyDetailsPage: React.FC = () => {
               />
             </div>
             <div className="report-modal-footer">
+              <button className="download-report-btn" onClick={handleDownloadReport}>
+                <svg viewBox="0 0 24 24" width="16" height="16" style={{ marginRight: '8px' }}>
+                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" fill="currentColor" />
+                </svg>
+                Download PDF
+              </button>
               <button className="close-report-btn" onClick={closeReportView}>Close</button>
             </div>
           </div>
