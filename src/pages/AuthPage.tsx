@@ -3,6 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { ThemeContext } from '../context/ThemeContext';
+import SmartWalletAuth from '../components/SmartWalletAuth';
+import BasenamesRegistration from '../components/BasenamesRegistration';
+import OnchainKitIntegration from '../components/OnchainKitIntegration';
 
 enum AuthMode {
   SIGNIN = 'signin',
@@ -27,6 +30,9 @@ const AuthPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [formFocused, setFormFocused] = useState<string | null>(null);
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const [basename, setBasename] = useState<string | null>(null);
+  const [walletCreationStep, setWalletCreationStep] = useState<'wallet' | 'basename' | 'complete'>('wallet');
   
   // Reset form state when switching auth options
   useEffect(() => {
@@ -106,16 +112,44 @@ const AuthPage: React.FC = () => {
   
   const handleWalletAuth = () => {
     setAuthOption(AuthOption.WALLET);
-    setIsLoading(true);
+    setWalletCreationStep('wallet');
+    setWalletAddress(null);
+    setBasename(null);
+    setError('');
+  };
+  
+  const handleWalletCreated = (address: string) => {
+    setWalletAddress(address);
+    setWalletCreationStep('basename');
+    setError('');
+  };
+  
+  const handleWalletConnected = (address: string) => {
+    setWalletAddress(address);
     
-    // Simulate wallet connection
-    setTimeout(() => {
-      console.log('Connecting wallet');
-      setIsLoading(false);
+    // Check if user already has a basename
+    const savedBasename = localStorage.getItem('userBasename');
+    if (savedBasename) {
+      setBasename(savedBasename);
+      setWalletCreationStep('complete');
       
-      // Redirect to dashboard page
+      // Redirect to dashboard after a short delay
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 1500);
+    } else {
+      setWalletCreationStep('basename');
+    }
+  };
+  
+  const handleBasenameRegistered = (name: string) => {
+    setBasename(name);
+    setWalletCreationStep('complete');
+    
+    // Redirect to dashboard after a short delay
+    setTimeout(() => {
       navigate('/dashboard');
-    }, 1000);
+    }, 1500);
   };
   
   return (
@@ -262,11 +296,50 @@ const AuthPage: React.FC = () => {
           )}
           
           {authOption === AuthOption.WALLET && (
-            <div className="auth-message">
-              <div className="auth-message-icon">🔐</div>
-              <p>Please connect your wallet to continue.</p>
-              <p className="auth-wallet-note">Make sure you have MetaMask or another Web3 wallet installed.</p>
-              <div className="loading-spinner"></div>
+            <div className="auth-wallet-container">
+              {error && <div className="auth-error">{error}</div>}
+              
+              {walletCreationStep === 'wallet' && (
+                <>
+                  <h3>Wallet Setup</h3>
+                  <p>Choose how you want to connect to the blockchain:</p>
+                  <SmartWalletAuth
+                    onWalletCreated={handleWalletCreated}
+                    onWalletConnected={handleWalletConnected}
+                    onError={setError}
+                  />
+                </>
+              )}
+              
+              {walletCreationStep === 'basename' && walletAddress && (
+                <>
+                  <h3>Almost Done!</h3>
+                  <p>Your wallet address: <code>{walletAddress.substring(0, 6)}...{walletAddress.substring(walletAddress.length - 4)}</code></p>
+                  <BasenamesRegistration
+                    walletAddress={walletAddress}
+                    onBasenameRegistered={handleBasenameRegistered}
+                    onError={setError}
+                  />
+                </>
+              )}
+              
+              {walletCreationStep === 'complete' && walletAddress && basename && (
+                <div className="auth-success">
+                  <div className="auth-success-icon">✅</div>
+                  <h3>Setup Complete!</h3>
+                  <p>Your wallet is ready to use.</p>
+                  <p><strong>Wallet:</strong> {walletAddress.substring(0, 6)}...{walletAddress.substring(walletAddress.length - 4)}</p>
+                  <p><strong>Basename:</strong> {basename}.base</p>
+                  
+                  <div className="onchainkit-container">
+                    <OnchainKitIntegration walletAddress={walletAddress} />
+                  </div>
+                  
+                  <p className="redirect-message">Redirecting to dashboard...</p>
+                  <div className="loading-spinner"></div>
+                </div>
+              )}
+              
               {isDarkMode && (
                 <div className="blockchain-connection" style={{ bottom: '10%', width: '50%', animationDelay: '0.5s' }}></div>
               )}
