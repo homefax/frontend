@@ -1,0 +1,299 @@
+.payment-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.payment-modal {
+  background-color: var(--background-color, #fff);
+  color: var(--text-color, #333);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 0;
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.payment-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color, #eee);
+}
+
+.payment-modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-secondary, #666);
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.close-button:hover {
+  background-color: var(--hover-color, rgba(0, 0, 0, 0.05));
+}
+
+.payment-details {
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color, #eee);
+}
+
+.payment-details h3 {
+  margin: 0 0 10px;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.payment-price {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary-color, #007bff);
+  margin: 0;
+}
+
+.payment-methods {
+  padding: 20px;
+  border-bottom: 1px solid var(--border-color, #eee);
+}
+
+.payment-methods h4 {
+  margin: 0 0 15px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-secondary, #666);
+}
+
+.payment-method-option {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.payment-method-option:hover {
+  background-color: var(--hover-color, rgba(0, 0, 0, 0.02));
+}
+
+.payment-method-option.selected {
+  border-color: var(--primary-color, #007bff);
+  background-color: var(--primary-light, rgba(0, 123, 255, 0.05));
+}
+
+.payment-method-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  border-radius: 6px;
+}
+
+.payment-method-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.apple-pay-icon svg {
+  fill: #000;
+}
+
+.card-icon svg {
+  fill: var(--text-color, #333);
+}
+
+.crypto-icon svg {
+  fill: #627eea;
+}
+
+.payment-form {
+  padding: 20px;
+  border-bottom: 1px solid var(--border-color, #eee);
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  color: var(--text-secondary, #666);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: var(--input-bg, #fff);
+  color: var(--text-color, #333);
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary-color, #007bff);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.crypto-section {
+  padding: 20px;
+  border-bottom: 1px solid var(--border-color, #eee);
+  text-align: center;
+}
+
+.connect-wallet-btn {
+  background-color: var(--primary-color, #007bff);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.connect-wallet-btn:hover {
+  background-color: var(--primary-dark, #0069d9);
+}
+
+.connect-wallet-btn:disabled {
+  background-color: var(--disabled-color, #ccc);
+  cursor: not-allowed;
+}
+
+.wallet-info {
+  background-color: var(--success-light, rgba(40, 167, 69, 0.1));
+  border: 1px solid var(--success-color, #28a745);
+  border-radius: 4px;
+  padding: 15px;
+  margin-top: 10px;
+}
+
+.wallet-info p {
+  margin: 0 0 5px;
+}
+
+.wallet-address {
+  font-family: monospace;
+  font-size: 0.9rem;
+  background-color: var(--code-bg, rgba(0, 0, 0, 0.05));
+  padding: 5px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.payment-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.cancel-btn {
+  background-color: transparent;
+  color: var(--text-color, #333);
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 4px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancel-btn:hover {
+  background-color: var(--hover-color, rgba(0, 0, 0, 0.05));
+}
+
+.pay-now-btn {
+  background-color: var(--primary-color, #007bff);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  min-width: 150px;
+}
+
+.pay-now-btn:hover {
+  background-color: var(--primary-dark, #0069d9);
+}
+
+.pay-now-btn:disabled {
+  background-color: var(--disabled-color, #ccc);
+  cursor: not-allowed;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .payment-modal {
+    --background-color: #1a1a1a;
+    --text-color: #f0f0f0;
+    --text-secondary: #aaa;
+    --border-color: #333;
+    --hover-color: rgba(255, 255, 255, 0.05);
+    --input-bg: #2a2a2a;
+    --code-bg: rgba(255, 255, 255, 0.1);
+    --disabled-color: #555;
+  }
+  
+  .card-icon svg {
+    fill: #f0f0f0;
+  }
+}

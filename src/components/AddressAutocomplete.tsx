@@ -88,7 +88,7 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
 
     // Create and append the script tag
     const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=IzaSyCVdxawTsRoFRFfYZ01Tnz0CwQTm0dyBmw&libraries=places&callback=initGoogleMapsAutocomplete`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=google-key&libraries=places&callback=initGoogleMapsAutocomplete`;
     script.async = true;
     script.defer = true;
     script.onerror = () => {

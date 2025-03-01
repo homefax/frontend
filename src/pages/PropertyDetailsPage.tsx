@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import PaymentOptionsModal from '../components/PaymentOptionsModal';
 import apiService, { Property } from '../services/api';
+import '../styles/PaymentOptionsModal.css';
+import '../styles/ReportModal.css';
 
 interface Report {
   id: string;
@@ -20,12 +23,21 @@ interface Report {
   purchased: boolean;
 }
 
+interface ReportContent {
+  content: string;
+  contentType: string;
+}
+
 const PropertyDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [property, setProperty] = useState<Property | null>(null);
   const [reports, setReports] = useState<Report[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [selectedReport, setSelectedReport] = useState<Report | null>(null);
+  const [reportContent, setReportContent] = useState<ReportContent | null>(null);
+  const [isViewingReport, setIsViewingReport] = useState(false);
   
   useEffect(() => {
     const fetchPropertyDetails = async () => {
@@ -53,25 +65,52 @@ const PropertyDetailsPage: React.FC = () => {
     fetchPropertyDetails();
   }, [id]);
   
-  const handlePurchaseReport = async (reportId: string) => {
+  const handlePurchaseReport = (report: Report) => {
+    setSelectedReport(report);
+    setIsPaymentModalOpen(true);
+  };
+  
+  const handlePaymentComplete = async (paymentMethod: string, transactionData: any) => {
+    if (!selectedReport) return;
+    
     try {
-      // In a real app, you would integrate with a payment system
-      // For now, we'll just simulate a successful purchase with crypto
-      await apiService.reports.purchase(reportId, {
-        paymentMethod: 'crypto',
-        transactionHash: 'mock-transaction-hash'
+      // Call the API to process the payment
+      await apiService.reports.purchase(selectedReport.id, {
+        paymentMethod,
+        ...transactionData
       });
       
       // Update the reports list to show the report as purchased
-      setReports(prevReports => 
-        prevReports.map(report => 
-          report.id === reportId ? { ...report, purchased: true } : report
+      setReports(prevReports =>
+        prevReports.map(report =>
+          report.id === selectedReport.id ? { ...report, purchased: true } : report
         )
       );
+      
+      // Close the modal and reset selected report
+      setIsPaymentModalOpen(false);
+      setSelectedReport(null);
     } catch (err) {
       console.error('Error purchasing report:', err);
-      alert('Failed to purchase report. Please try again.');
+      alert('Failed to complete purchase. Please try again.');
     }
+  };
+  
+  const handleViewReport = async (reportId: string) => {
+    try {
+      // Fetch the report content
+      const content = await apiService.reports.getContent(reportId);
+      setReportContent(content);
+      setIsViewingReport(true);
+    } catch (err) {
+      console.error('Error fetching report content:', err);
+      alert('Failed to load report content. Please try again.');
+    }
+  };
+  
+  const closeReportView = () => {
+    setIsViewingReport(false);
+    setReportContent(null);
   };
   
   if (loading) {
@@ -181,13 +220,18 @@ const PropertyDetailsPage: React.FC = () => {
                   
                   <div className="report-actions">
                     {report.purchased ? (
-                      <button className="view-report-btn">View Report</button>
+                      <button
+                        className="view-report-btn"
+                        onClick={() => handleViewReport(report.id)}
+                      >
+                        View Report
+                      </button>
                     ) : (
                       <div className="purchase-section">
                         <span className="report-price">${report.price}</span>
-                        <button 
+                        <button
                           className="purchase-report-btn"
-                          onClick={() => handlePurchaseReport(report.id)}
+                          onClick={() => handlePurchaseReport(report)}
                         >
                           Purchase
                         </button>
@@ -202,6 +246,48 @@ const PropertyDetailsPage: React.FC = () => {
       </main>
       
       <Footer />
+      
+      {/* Payment Modal */}
+      {selectedReport && (
+        <PaymentOptionsModal
+          isOpen={isPaymentModalOpen}
+          onClose={() => setIsPaymentModalOpen(false)}
+          reportPrice={selectedReport.price}
+          reportTitle={selectedReport.title}
+          onPaymentComplete={handlePaymentComplete}
+        />
+      )}
+      
+      {/* Report Viewing Modal */}
+      {isViewingReport && reportContent && (
+        <div className="report-modal-overlay">
+          <div className="report-modal">
+            <div className="report-modal-header">
+              <h2>Report Content</h2>
+              <button className="close-button" onClick={closeReportView}>×</button>
+            </div>
+            <div className="report-modal-content">
+              {reportContent.contentType === 'text/plain' ? (
+                <div className="report-text-content">
+                  <p>{reportContent.content}</p>
+                </div>
+              ) : (
+                <div className="report-document-content">
+                  <iframe
+                    src={`data:${reportContent.contentType};base64,${btoa(reportContent.content)}`}
+                    title="Report Document"
+                    width="100%"
+                    height="500px"
+                  />
+                </div>
+              )}
+            </div>
+            <div className="report-modal-footer">
+              <button className="close-report-btn" onClick={closeReportView}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
