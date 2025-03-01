@@ -45,7 +45,11 @@ const HomePage: React.FC = () => {
           <div className="features-grid">
             <div className="feature-card">
               <div className="feature-icon">
-                {isDarkMode ? '⛓️' : '🔒'}
+                <img
+                  src='/blockchain.png'
+                  alt="Blockchain"
+                  style={{ width: '40%', height: '40%', objectFit: 'contain' }}
+                />
               </div>
               <h3>Secure Blockchain Technology</h3>
               <p>All property records are stored on a tamper-proof blockchain ledger, ensuring data integrity and security.</p>
@@ -53,7 +57,11 @@ const HomePage: React.FC = () => {
             
             <div className="feature-card">
               <div className="feature-icon">
-                {isDarkMode ? '📊' : '🏠'}
+                <img
+                  src='/history.png'
+                  alt="History"
+                  style={{ width: '40%', height: '40%', objectFit: 'contain' }}
+                />
               </div>
               <h3>Comprehensive Property History</h3>
               <p>Access complete ownership records, renovations, insurance claims, title status, and environmental risks.</p>
@@ -61,7 +69,11 @@ const HomePage: React.FC = () => {
             
             <div className="feature-card">
               <div className="feature-icon">
-                {isDarkMode ? '🧠' : '🤖'}
+                <img
+                  src='/think.png'
+                  alt="Think"
+                  style={{ width: '40%', height: '40%', objectFit: 'contain' }}
+                />
               </div>
               <h3>AI-Powered Insights</h3>
               <p>Our AI technology standardizes and analyzes property inspection reports to provide valuable recommendations.</p>
@@ -69,7 +81,11 @@ const HomePage: React.FC = () => {
             
             <div className="feature-card">
               <div className="feature-icon">
-                {isDarkMode ? '📝' : '💰'}
+                <img
+                  src='/exchange.png'
+                  alt="Exchange"
+                  style={{ width: '40%', height: '40%', objectFit: 'contain' }}
+                />
               </div>
               <h3>Transparent Transactions</h3>
               <p>Smart contracts ensure automatic and secure distribution of payments between all parties involved.</p>
