@@ -658,9 +658,29 @@ This is a sample report generated for demonstration purposes. In a production en
 
       // Real API call
       const token = localStorage.getItem("token");
-      return fetchAPI(`/blockchain/report/${reportId}/content`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await fetchAPI(
+        `/blockchain/report/${reportId}/content`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      // If the response contains base64 content, decode it
+      if (response.content && typeof response.content === "string") {
+        try {
+          // Convert base64 to string
+          const decodedContent = atob(response.content);
+          return {
+            content: decodedContent,
+            contentType: response.contentType || "application/json",
+          };
+        } catch (error) {
+          console.error("Error decoding base64 content:", error);
+          return response;
+        }
+      }
+
+      return response;
     },
   },
 
@@ -698,7 +718,7 @@ This is a sample report generated for demonstration purposes. In a production en
     createReport: async (reportData: {
       propertyId: number;
       reportType: string;
-      reportHash: string;
+      reportContent: string;
       authorAddress: string;
       ownerAddress: string;
       price: string;

@@ -26,6 +26,13 @@ export const BLOCKCHAIN_CONFIG = {
     process.env.REACT_APP_BLOCK_EXPLORER_URL || "https://goerli.basescan.org",
 };
 
+// EthStorage configuration
+export const ETHSTORAGE_CONFIG = {
+  rpcUrl:
+    process.env.REACT_APP_ETHSTORAGE_RPC_URL ||
+    "https://rpc.beta.testnet.l2.quarkchain.io:8545",
+};
+
 // Feature flags
 export const FEATURES = {
   enableBlockchainVerification: true,
