@@ -699,6 +699,8 @@ This is a sample report generated for demonstration purposes. In a production en
       propertyId: number;
       reportType: string;
       reportHash: string;
+      authorAddress: string;
+      ownerAddress: string;
       price: string;
     }) => {
       if (USE_MOCK_DATA) {
@@ -709,6 +711,8 @@ This is a sample report generated for demonstration purposes. In a production en
           success: true,
           reportId: Math.floor(Math.random() * 1000) + 1,
           message: "Report created successfully on the blockchain",
+          author: reportData.authorAddress,
+          owner: reportData.ownerAddress,
         };
       }
 
