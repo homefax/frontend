@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import PaymentOptionsModal from '../components/PaymentOptionsModal';
+import ReportContent from '../components/ReportContent';
 import apiService, { Property } from '../services/api';
 import '../styles/PaymentOptionsModal.css';
 import '../styles/ReportModal.css';
@@ -38,6 +39,7 @@ const PropertyDetailsPage: React.FC = () => {
   const [selectedReport, setSelectedReport] = useState<Report | null>(null);
   const [reportContent, setReportContent] = useState<ReportContent | null>(null);
   const [isViewingReport, setIsViewingReport] = useState(false);
+  const [currentReportTitle, setCurrentReportTitle] = useState('');
   
   useEffect(() => {
     const fetchPropertyDetails = async () => {
@@ -98,6 +100,12 @@ const PropertyDetailsPage: React.FC = () => {
   
   const handleViewReport = async (reportId: string) => {
     try {
+      // Find the report to get its title
+      const report = reports.find(r => r.id === reportId);
+      if (report) {
+        setCurrentReportTitle(report.title);
+      }
+      
       // Fetch the report content
       const content = await apiService.reports.getContent(reportId);
       setReportContent(content);
@@ -111,6 +119,37 @@ const PropertyDetailsPage: React.FC = () => {
   const closeReportView = () => {
     setIsViewingReport(false);
     setReportContent(null);
+    setCurrentReportTitle('');
+  };
+  
+  const handleDownloadReport = () => {
+    if (!reportContent || !currentReportTitle) return;
+    
+    // In a real app, we would use a PDF generation library like jsPDF
+    // For this mock implementation, we'll create a text file with the content
+    
+    // Create a blob with the content
+    const blob = new Blob([reportContent.content], { type: 'text/plain' });
+    
+    // Create a URL for the blob
+    const url = URL.createObjectURL(blob);
+    
+    // Create a link element
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${currentReportTitle.replace(/\s+/g, '_')}_Report.pdf`;
+    
+    // Append the link to the body
+    document.body.appendChild(a);
+    
+    // Click the link
+    a.click();
+    
+    // Remove the link
+    document.body.removeChild(a);
+    
+    // Revoke the URL
+    URL.revokeObjectURL(url);
   };
   
   if (loading) {
@@ -263,26 +302,22 @@ const PropertyDetailsPage: React.FC = () => {
         <div className="report-modal-overlay">
           <div className="report-modal">
             <div className="report-modal-header">
-              <h2>Report Content</h2>
+              <h2>{currentReportTitle}</h2>
               <button className="close-button" onClick={closeReportView}>×</button>
             </div>
             <div className="report-modal-content">
-              {reportContent.contentType === 'text/plain' ? (
-                <div className="report-text-content">
-                  <p>{reportContent.content}</p>
-                </div>
-              ) : (
-                <div className="report-document-content">
-                  <iframe
-                    src={`data:${reportContent.contentType};base64,${btoa(reportContent.content)}`}
-                    title="Report Document"
-                    width="100%"
-                    height="500px"
-                  />
-                </div>
-              )}
+              <ReportContent
+                content={reportContent.content}
+                contentType={reportContent.contentType}
+              />
             </div>
             <div className="report-modal-footer">
+              <button className="download-report-btn" onClick={handleDownloadReport}>
+                <svg viewBox="0 0 24 24" width="16" height="16" style={{ marginRight: '8px' }}>
+                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" fill="currentColor" />
+                </svg>
+                Download PDF
+              </button>
               <button className="close-report-btn" onClick={closeReportView}>Close</button>
             </div>
           </div>
