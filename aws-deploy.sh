@@ -8,8 +8,8 @@ set -e
 
 # Default values
 ENVIRONMENT="mock"
-S3_BUCKET=""
-CLOUDFRONT_ID=""
+S3_BUCKET="homefax.xyz-website-s3-qa"
+CLOUDFRONT_ID="E1EKHBEHVDAEKU"
 PROFILE="default"
 
 # Parse command line arguments
