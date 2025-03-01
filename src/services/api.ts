@@ -452,9 +452,206 @@ export const apiService = {
         // Simulate API delay
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
+        // Generate different mock reports based on the report ID
+        let content = "";
+        let contentType = "text/plain";
+
+        // Home Inspection Report
+        if (reportId === "1") {
+          content = `
+# HomeFax Property Inspection Report
+
+**Property Address:** 123 Main Street, Denver, CO 80202
+**Inspection Date:** February 15, 2025
+**Inspector:** Joe Smith, Certified Home Inspector #12345
+
+## Executive Summary
+
+This property is in overall good condition with some minor issues noted. The home was built in 1998 and has been well-maintained. The roof was replaced in 2020, and the HVAC system was updated in 2022.
+
+### Key Findings:
+- **Foundation**: Solid, no major cracks or settling issues
+- **Roof**: Excellent condition, recently replaced (5-year warranty remaining)
+- **Electrical**: Up to code, 200 amp service
+- **Plumbing**: Good condition, copper pipes throughout
+- **HVAC**: High-efficiency system installed in 2022
+- **Appliances**: All in working order, refrigerator is 2 years old
+
+## Areas of Concern
+
+1. **Minor water damage** in the basement corner near the utility room. Recommend further evaluation by a waterproofing specialist.
+2. **Garage door opener** is functioning but making unusual noise. May need servicing soon.
+3. **Deck railings** show signs of weathering and should be treated or replaced within the next year.
+
+## Blockchain Verification
+
+This report has been verified on the Ethereum blockchain with transaction hash:
+0x7f9e8f7e6b5a4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8
+
+## Recommendations
+
+1. Address water damage in basement
+2. Service garage door opener
+3. Treat or replace deck railings
+4. Consider updating bathroom fixtures (cosmetic only)
+
+---
+
+This report is provided as a general assessment of the property's condition at the time of inspection. HomeFax recommends addressing all issues marked as concerns and consulting with specialized contractors for detailed evaluations where noted.
+`;
+        }
+        // Title History Report
+        else if (reportId === "2") {
+          content = `
+# HomeFax Title History Report
+
+**Property Address:** 123 Main Street, Denver, CO 80202
+**Report Generated:** February 20, 2025
+**Report ID:** THR-2025-02-20-7842
+
+## Ownership History
+
+| Owner | Purchase Date | Sale Date | Purchase Price | Notes |
+|-------|--------------|-----------|----------------|-------|
+| Smith Family Trust | 01/15/2020 | Present | $425,000 | Current owner |
+| Johnson, Robert & Mary | 06/10/2010 | 01/15/2020 | $310,000 | No liens or encumbrances |
+| Denver Properties LLC | 03/22/2005 | 06/10/2010 | $245,000 | Commercial to residential conversion |
+| Commercial Holdings Inc. | 11/05/1998 | 03/22/2005 | $180,000 | Original construction |
+
+## Title Status
+
+**Current Status:** Clear
+**Last Title Search:** February 18, 2025
+**Title Insurance:** Available
+
+## Liens & Encumbrances
+
+No active liens or encumbrances found on this property.
+
+### Historical Liens (Resolved)
+- Construction lien filed 04/15/2006, resolved 07/22/2006
+- Property tax lien filed 11/30/2008, resolved 02/15/2009
+
+## Easements & Rights of Way
+
+- Utility easement along the north property line (5 feet)
+- Shared driveway agreement with neighboring property (123B Main Street)
+
+## Blockchain Verification
+
+This title history has been verified on the Ethereum blockchain with transaction hash:
+0x8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b
+
+## Legal Description
+
+Lot 7, Block 12, Denver Heights Subdivision, City of Denver, County of Denver, State of Colorado, according to the recorded plat thereof.
+
+---
+
+This report provides a comprehensive history of the property's ownership and title status. All information has been verified through public records and blockchain technology. HomeFax guarantees the accuracy of this information as of the report generation date.
+`;
+        }
+        // Renovation Records Report
+        else if (reportId === "3") {
+          content = `
+# HomeFax Renovation History Report
+
+**Property Address:** 123 Main Street, Denver, CO 80202
+**Report Generated:** February 25, 2025
+**Report ID:** RHR-2025-02-25-3921
+
+## Major Renovations
+
+### Kitchen Remodel (2021)
+- **Contractor:** Mountain View Kitchens
+- **Permit #:** DEN-2021-05-1234
+- **Cost:** $45,000
+- **Scope:** Complete kitchen renovation including new cabinets, countertops, appliances, flooring, and lighting
+- **Verified:** Yes (Building inspection passed 07/15/2021)
+
+### Bathroom Upgrades (2022)
+- **Contractor:** Luxury Bath Systems
+- **Permit #:** DEN-2022-03-5678
+- **Cost:** $28,000
+- **Scope:** Master bathroom and guest bathroom renovation with new fixtures, tile work, and ventilation
+- **Verified:** Yes (Building inspection passed 05/10/2022)
+
+### Basement Finishing (2023)
+- **Contractor:** Homeowner (DIY with licensed electrical and plumbing)
+- **Permit #:** DEN-2023-01-9012
+- **Cost:** $32,000
+- **Scope:** Conversion of unfinished basement to recreation room, home office, and 3/4 bathroom
+- **Verified:** Yes (Building inspection passed 04/22/2023)
+
+## Minor Improvements
+
+1. **Exterior Painting** (2020) - $8,500
+2. **Deck Replacement** (2021) - $12,000
+3. **Smart Home System Installation** (2022) - $5,500
+4. **Landscaping & Irrigation System** (2023) - $15,000
+5. **Energy-Efficient Window Replacement** (2024) - $22,000
+
+## Energy Efficiency Upgrades
+
+- Solar panel installation (2022) - 5.8 kW system
+- Attic insulation upgrade to R-60 (2021)
+- Smart thermostat installation (2022)
+- LED lighting throughout (2021-2022)
+
+## Blockchain Verification
+
+This renovation history has been verified on the Ethereum blockchain with transaction hash:
+0x9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e
+
+## Warranty Information
+
+- Kitchen appliances: Manufacturer warranty valid until 06/15/2026
+- Bathroom fixtures: Manufacturer warranty valid until 04/10/2027
+- Solar panels: 25-year warranty valid until 05/20/2047
+- Windows: Lifetime warranty (transferable to new owners)
+
+---
+
+This report documents all major renovations and improvements made to the property. All information has been verified through building permits, contractor records, and blockchain technology. HomeFax guarantees the accuracy of this information as of the report generation date.
+`;
+        }
+        // Default report for any other ID
+        else {
+          content = `
+# HomeFax Property Report
+
+**Property Address:** 123 Main Street, Denver, CO 80202
+**Report Generated:** February 28, 2025
+**Report ID:** PR-2025-02-28-${Math.floor(Math.random() * 10000)}
+
+## Property Overview
+
+This report contains detailed information about the property, including its history, condition, and relevant documentation. The information has been verified using blockchain technology to ensure accuracy and immutability.
+
+### Key Information
+- **Year Built:** 1998
+- **Square Footage:** 2,450
+- **Lot Size:** 0.25 acres
+- **Zoning:** Residential (R-1)
+- **Last Sale Date:** January 15, 2020
+- **Last Sale Price:** $425,000
+
+## Blockchain Verification
+
+This report has been verified on the Ethereum blockchain with transaction hash:
+0x${Array(64)
+            .fill(0)
+            .map(() => Math.floor(Math.random() * 16).toString(16))
+            .join("")}
+
+---
+
+This is a sample report generated for demonstration purposes. In a production environment, this would contain comprehensive property information verified through blockchain technology.
+`;
+        }
+
         return {
-          content:
-            "This is a mock report content. In a real application, this would be the actual report content or a link to download the report.",
+          content,
           contentType: "text/plain",
         };
       }

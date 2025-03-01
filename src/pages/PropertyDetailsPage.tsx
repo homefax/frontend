@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import PaymentOptionsModal from '../components/PaymentOptionsModal';
+import ReportContent from '../components/ReportContent';
 import apiService, { Property } from '../services/api';
 import '../styles/PaymentOptionsModal.css';
 import '../styles/ReportModal.css';
@@ -38,6 +39,7 @@ const PropertyDetailsPage: React.FC = () => {
   const [selectedReport, setSelectedReport] = useState<Report | null>(null);
   const [reportContent, setReportContent] = useState<ReportContent | null>(null);
   const [isViewingReport, setIsViewingReport] = useState(false);
+  const [currentReportTitle, setCurrentReportTitle] = useState('');
   
   useEffect(() => {
     const fetchPropertyDetails = async () => {
@@ -98,6 +100,12 @@ const PropertyDetailsPage: React.FC = () => {
   
   const handleViewReport = async (reportId: string) => {
     try {
+      // Find the report to get its title
+      const report = reports.find(r => r.id === reportId);
+      if (report) {
+        setCurrentReportTitle(report.title);
+      }
+      
       // Fetch the report content
       const content = await apiService.reports.getContent(reportId);
       setReportContent(content);
@@ -111,6 +119,7 @@ const PropertyDetailsPage: React.FC = () => {
   const closeReportView = () => {
     setIsViewingReport(false);
     setReportContent(null);
+    setCurrentReportTitle('');
   };
   
   if (loading) {
@@ -263,24 +272,14 @@ const PropertyDetailsPage: React.FC = () => {
         <div className="report-modal-overlay">
           <div className="report-modal">
             <div className="report-modal-header">
-              <h2>Report Content</h2>
+              <h2>{currentReportTitle}</h2>
               <button className="close-button" onClick={closeReportView}>×</button>
             </div>
             <div className="report-modal-content">
-              {reportContent.contentType === 'text/plain' ? (
-                <div className="report-text-content">
-                  <p>{reportContent.content}</p>
-                </div>
-              ) : (
-                <div className="report-document-content">
-                  <iframe
-                    src={`data:${reportContent.contentType};base64,${btoa(reportContent.content)}`}
-                    title="Report Document"
-                    width="100%"
-                    height="500px"
-                  />
-                </div>
-              )}
+              <ReportContent
+                content={reportContent.content}
+                contentType={reportContent.contentType}
+              />
             </div>
             <div className="report-modal-footer">
               <button className="close-report-btn" onClick={closeReportView}>Close</button>

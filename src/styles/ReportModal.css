@@ -61,6 +61,91 @@
   line-height: 1.6;
 }
 
+.report-content-formatted {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  line-height: 1.6;
+  color: var(--text-color, #333);
+}
+
+.report-content-formatted h1 {
+  font-size: 1.8rem;
+  margin: 1.5rem 0 1rem;
+  color: var(--primary-color, #007bff);
+  border-bottom: 1px solid var(--border-color, #eee);
+  padding-bottom: 0.5rem;
+}
+
+.report-content-formatted h2 {
+  font-size: 1.5rem;
+  margin: 1.2rem 0 0.8rem;
+  color: var(--primary-color, #007bff);
+}
+
+.report-content-formatted h3 {
+  font-size: 1.2rem;
+  margin: 1rem 0 0.6rem;
+  color: var(--text-color, #333);
+}
+
+.report-content-formatted h4 {
+  font-size: 1.1rem;
+  margin: 0.8rem 0 0.5rem;
+  color: var(--text-color, #333);
+}
+
+.report-content-formatted p {
+  margin: 0.5rem 0 1rem;
+}
+
+.report-content-formatted ul,
+.report-content-formatted ol {
+  margin: 0.5rem 0 1rem 1.5rem;
+}
+
+.report-content-formatted li {
+  margin-bottom: 0.3rem;
+}
+
+.report-content-formatted hr {
+  border: none;
+  border-top: 1px solid var(--border-color, #eee);
+  margin: 1.5rem 0;
+}
+
+.report-content-formatted strong {
+  font-weight: 600;
+}
+
+.report-content-formatted em {
+  font-style: italic;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 1.5rem;
+  font-size: 0.9rem;
+}
+
+.report-table th {
+  background-color: var(--primary-light, rgba(0, 123, 255, 0.1));
+  color: var(--primary-color, #007bff);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color, #ddd);
+}
+
+.report-table td {
+  padding: 0.75rem;
+  border: 1px solid var(--border-color, #ddd);
+  vertical-align: top;
+}
+
+.report-table tr:nth-child(even) {
+  background-color: var(--hover-color, rgba(0, 0, 0, 0.02));
+}
+
 .report-document-content {
   height: 500px;
   overflow: hidden;
