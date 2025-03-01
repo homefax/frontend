@@ -12,6 +12,9 @@ import DashboardPage from './pages/dashboard/DashboardPage';
 import ReportsPage from './pages/reports/ReportsPage';
 import ActivityPage from './pages/activity/ActivityPage';
 
+// Components
+import DAOGovernance from './components/DAOGovernance';
+
 // Placeholder for future pages
 const AboutPage = () => <div>About Page (Coming Soon)</div>;
 const PrivacyPage = () => <div>Privacy Policy (Coming Soon)</div>;
@@ -30,6 +33,7 @@ function App() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/reports" element={<ReportsPage />} />
           <Route path="/activity" element={<ActivityPage />} />
+          <Route path="/governance" element={<DAOGovernance />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
