@@ -658,7 +658,182 @@ This is a sample report generated for demonstration purposes. In a production en
 
       // Real API call
       const token = localStorage.getItem("token");
-      return fetchAPI(`/reports/${reportId}/content`, {
+      return fetchAPI(`/blockchain/report/${reportId}/content`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    },
+  },
+
+  // Blockchain endpoints
+  blockchain: {
+    createProperty: async (propertyData: {
+      propertyAddress: string;
+      city: string;
+      state: string;
+      zipCode: string;
+    }) => {
+      if (USE_MOCK_DATA) {
+        // Simulate API delay
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        return {
+          success: true,
+          propertyId: Math.floor(Math.random() * 1000) + 1,
+          message: "Property created successfully on the blockchain",
+        };
+      }
+
+      // Real API call
+      const token = localStorage.getItem("token");
+      return fetchAPI("/blockchain/property", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(propertyData),
+      });
+    },
+
+    createReport: async (reportData: {
+      propertyId: number;
+      reportType: string;
+      reportHash: string;
+      price: string;
+    }) => {
+      if (USE_MOCK_DATA) {
+        // Simulate API delay
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        return {
+          success: true,
+          reportId: Math.floor(Math.random() * 1000) + 1,
+          message: "Report created successfully on the blockchain",
+        };
+      }
+
+      // Real API call
+      const token = localStorage.getItem("token");
+      return fetchAPI("/blockchain/report", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(reportData),
+      });
+    },
+
+    purchaseReport: async (reportId: number, price: string) => {
+      if (USE_MOCK_DATA) {
+        // Simulate API delay
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        return {
+          success: true,
+          message: "Report purchased successfully on the blockchain",
+        };
+      }
+
+      // Real API call
+      const token = localStorage.getItem("token");
+      return fetchAPI(`/blockchain/report/${reportId}/purchase`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ price }),
+      });
+    },
+
+    getProperty: async (propertyId: number) => {
+      if (USE_MOCK_DATA) {
+        // Simulate API delay
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        return {
+          success: true,
+          property: {
+            id: propertyId,
+            propertyAddress: "123 Blockchain Street",
+            city: "Crypto City",
+            state: "CA",
+            zipCode: "94105",
+            owner: "0x1234567890abcdef1234567890abcdef12345678",
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            isVerified: true,
+          },
+        };
+      }
+
+      // Real API call
+      const token = localStorage.getItem("token");
+      return fetchAPI(`/blockchain/property/${propertyId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    },
+
+    getReport: async (reportId: number) => {
+      if (USE_MOCK_DATA) {
+        // Simulate API delay
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        return {
+          success: true,
+          report: {
+            id: reportId,
+            propertyId: 1,
+            reportType: "inspection",
+            reportHash: "QmXzYgaP5L9Eqhwgy5ygEwNnfPkqvVeHsAjWBfM4E1KHEv",
+            creator: "0x1234567890abcdef1234567890abcdef12345678",
+            price: "0.1",
+            createdAt: new Date().toISOString(),
+            isVerified: true,
+          },
+        };
+      }
+
+      // Real API call
+      const token = localStorage.getItem("token");
+      return fetchAPI(`/blockchain/report/${reportId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    },
+
+    getUserProperties: async () => {
+      if (USE_MOCK_DATA) {
+        // Simulate API delay
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        return {
+          success: true,
+          propertyIds: [1, 2, 3],
+        };
+      }
+
+      // Real API call
+      const token = localStorage.getItem("token");
+      return fetchAPI("/blockchain/user/properties", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    },
+
+    getPropertyReports: async (propertyId: number) => {
+      if (USE_MOCK_DATA) {
+        // Simulate API delay
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        return {
+          success: true,
+          reportIds: [1, 2, 3],
+        };
+      }
+
+      // Real API call
+      const token = localStorage.getItem("token");
+      return fetchAPI(`/blockchain/property/${propertyId}/reports`, {
         headers: { Authorization: `Bearer ${token}` },
       });
     },

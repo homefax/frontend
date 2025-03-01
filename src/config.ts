@@ -14,11 +14,24 @@ export const API_BASE_URL =
 export const S3_BUCKET = process.env.REACT_APP_S3_BUCKET || "homefax-assets";
 export const S3_REGION = process.env.REACT_APP_S3_REGION || "us-east-1";
 
+// Blockchain configuration
+export const BLOCKCHAIN_CONFIG = {
+  contractAddress:
+    process.env.REACT_APP_CONTRACT_ADDRESS ||
+    "0x0000000000000000000000000000000000000000",
+  rpcUrl: process.env.REACT_APP_RPC_URL || "https://goerli.base.org",
+  chainId: process.env.REACT_APP_CHAIN_ID || "84531", // Base Goerli testnet
+  networkName: process.env.REACT_APP_NETWORK_NAME || "Base Goerli",
+  blockExplorerUrl:
+    process.env.REACT_APP_BLOCK_EXPLORER_URL || "https://goerli.basescan.org",
+};
+
 // Feature flags
 export const FEATURES = {
   enableBlockchainVerification: true,
-  enableReportPurchase: USE_MOCK_DATA, // Only enable in mock mode for now
+  enableReportPurchase: true, // Enable for both mock and real mode
   enablePropertySearch: true,
+  enableWalletConnection: true,
 };
 
 // Application version
@@ -37,6 +50,11 @@ if (IS_DEVELOPMENT) {
     apiBaseUrl: API_BASE_URL,
     environment: ENVIRONMENT,
     features: FEATURES,
+    blockchain: {
+      contractAddress: BLOCKCHAIN_CONFIG.contractAddress,
+      chainId: BLOCKCHAIN_CONFIG.chainId,
+      network: BLOCKCHAIN_CONFIG.networkName,
+    },
     version: APP_VERSION,
   });
 }
