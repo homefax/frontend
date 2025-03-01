@@ -25,7 +25,7 @@ const Footer: React.FC = () => {
         <div className="footer-section">
           <h3>Contact</h3>
           <ul className="footer-links">
-            <li>Email: info@homefax.io</li>
+            <li>Email: info@homefax.xyz</li>
             <li>Phone: (555) 123-4567</li>
             <li>Address: 123 Blockchain Ave, Crypto City</li>
           </ul>
@@ -36,7 +36,7 @@ const Footer: React.FC = () => {
           <div className="social-links">
             <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a>
             <a href="https://discord.com" target="_blank" rel="noopener noreferrer">Discord</a>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://github.com/homefax" target="_blank" rel="noopener noreferrer">GitHub</a>
           </div>
         </div>
       </div>
