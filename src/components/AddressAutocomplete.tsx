@@ -88,8 +88,7 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
 
     // Create and append the script tag
     const script = document.createElement('script');
-    // TODO: Replace 'YOUR_GOOGLE_MAPS_API_KEY' with a valid Google Maps API key with Places API enabled
-    script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places&callback=initGoogleMapsAutocomplete`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=IzaSyCVdxawTsRoFRFfYZ01Tnz0CwQTm0dyBmw&libraries=places&callback=initGoogleMapsAutocomplete`;
     script.async = true;
     script.defer = true;
     script.onerror = () => {
