@@ -1,0 +1,410 @@
+/* Smart Wallet Authentication Styles */
+.smart-wallet-auth {
+  margin-bottom: 2rem;
+}
+
+.wallet-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.wallet-option-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #f8f9fa;
+  color: #333;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.wallet-option-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.wallet-option-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.create-wallet-btn {
+  background-color: #0066ff;
+  color: white;
+}
+
+.connect-wallet-btn {
+  background-color: #333;
+  color: white;
+}
+
+.wallet-option-icon {
+  margin-right: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.wallet-option-separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.wallet-option-separator::before,
+.wallet-option-separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #ddd;
+}
+
+.wallet-option-separator::before {
+  margin-right: 0.5rem;
+}
+
+.wallet-option-separator::after {
+  margin-left: 0.5rem;
+}
+
+.wallet-info {
+  background-color: rgba(0, 102, 255, 0.05);
+  border-radius: 8px;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.wallet-info p {
+  margin: 0.5rem 0;
+}
+
+.wallet-info strong {
+  color: #333;
+}
+
+/* Basenames Registration Styles */
+.basenames-registration {
+  margin-top: 1.5rem;
+}
+
+.basenames-registration h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.basename-input-group {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.basename-input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 8px 0 0 8px;
+  font-size: 1rem;
+}
+
+.basename-suffix {
+  background-color: #f0f0f0;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+  color: #666;
+  font-weight: 500;
+}
+
+.basename-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.check-availability-btn,
+.register-basename-btn {
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.check-availability-btn {
+  background-color: #f0f0f0;
+  color: #333;
+  flex: 1;
+}
+
+.register-basename-btn {
+  background-color: #0066ff;
+  color: white;
+  flex: 1;
+}
+
+.check-availability-btn:hover:not(:disabled),
+.register-basename-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.check-availability-btn:disabled,
+.register-basename-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.basename-available {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background-color: rgba(0, 200, 83, 0.1);
+  border-radius: 8px;
+  color: #00a854;
+  margin-bottom: 1rem;
+}
+
+.availability-icon {
+  font-size: 1.2rem;
+}
+
+.basename-info {
+  background-color: rgba(0, 102, 255, 0.05);
+  border-radius: 8px;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.basename-info ul {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.basename-info li {
+  margin-bottom: 0.25rem;
+}
+
+/* Auth Wallet Container */
+.auth-wallet-container {
+  padding: 1rem;
+}
+
+.auth-success {
+  text-align: center;
+  padding: 2rem;
+}
+
+.auth-success-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+  animation: pulse 2s infinite;
+}
+
+.redirect-message {
+  margin-top: 1.5rem;
+  font-style: italic;
+  color: #666;
+}
+
+/* OnchainKit Integration Styles */
+.onchainkit-container {
+  margin: 2rem 0;
+  padding: 1rem;
+  background-color: rgba(0, 102, 255, 0.05);
+  border-radius: 8px;
+  text-align: left;
+}
+
+.onchainkit-integration h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  color: #0066ff;
+}
+
+.onchainkit-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.nft-collections {
+  margin-top: 1rem;
+}
+
+.nft-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.nft-item {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.nft-item:hover {
+  transform: translateY(-5px);
+}
+
+.nft-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.nft-details {
+  padding: 0.75rem;
+}
+
+.nft-name {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.nft-id {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.onchainkit-info {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: rgba(0, 102, 255, 0.1);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.onchainkit-info p {
+  margin: 0.5rem 0;
+}
+
+/* Dark Mode Styles for OnchainKit */
+[data-theme="dark"] .onchainkit-container {
+  background-color: rgba(0, 102, 255, 0.1);
+}
+
+[data-theme="dark"] .onchainkit-integration h3 {
+  color: #3399ff;
+}
+
+[data-theme="dark"] .nft-item {
+  background-color: #1a1a1a;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .nft-name {
+  color: #fff;
+}
+
+[data-theme="dark"] .nft-id {
+  color: #aaa;
+}
+
+[data-theme="dark"] .onchainkit-info {
+  background-color: rgba(0, 102, 255, 0.15);
+  color: #ccc;
+}
+
+[data-theme="dark"] .redirect-message {
+  color: #aaa;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Dark Mode Styles */
+[data-theme="dark"] .wallet-option-btn {
+  background: linear-gradient(to right, #1a1a1a, #2a2a2a);
+  color: #fff;
+  border: 1px solid #333;
+}
+
+[data-theme="dark"] .create-wallet-btn {
+  background: linear-gradient(to right, #0066ff, #0099ff);
+  border: none;
+}
+
+[data-theme="dark"] .connect-wallet-btn {
+  background: linear-gradient(to right, #333, #444);
+  border: none;
+}
+
+[data-theme="dark"] .wallet-info,
+[data-theme="dark"] .basename-info {
+  background-color: rgba(0, 102, 255, 0.1);
+  color: #ccc;
+}
+
+[data-theme="dark"] .wallet-info strong,
+[data-theme="dark"] .basename-info strong {
+  color: #fff;
+}
+
+[data-theme="dark"] .basename-input {
+  background-color: #1a1a1a;
+  border-color: #333;
+  color: #fff;
+}
+
+[data-theme="dark"] .basename-suffix {
+  background-color: #2a2a2a;
+  border-color: #333;
+  color: #ccc;
+}
+
+[data-theme="dark"] .check-availability-btn {
+  background: linear-gradient(to right, #333, #444);
+  color: #fff;
+}
+
+[data-theme="dark"] .register-basename-btn {
+  background: linear-gradient(to right, #0066ff, #0099ff);
+}
+
+[data-theme="dark"] .basename-available {
+  background-color: rgba(0, 200, 83, 0.2);
+}
+
+/* Loading Spinner */
+.loading-spinner-inline {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

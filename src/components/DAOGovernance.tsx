@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { useWeb3React } from '@web3-react/core';
-import { BLOCKCHAIN_CONFIG } from '../config';
 
 // Import ABI
 import HomeFaxDAOABI from '../abis/HomeFaxDAO.json';
@@ -21,7 +20,7 @@ interface Proposal {
 }
 
 const DAOGovernance: React.FC = () => {
-  const { account, library } = useWeb3React();
+  const { account, provider } = useWeb3React();
   const [proposals, setProposals] = useState<Proposal[]>([]);
   const [tokenBalance, setTokenBalance] = useState<string>('0');
   const [votingPower, setVotingPower] = useState<string>('0');
@@ -34,7 +33,7 @@ const DAOGovernance: React.FC = () => {
 
   useEffect(() => {
     const fetchDAOData = async () => {
-      if (!account || !library) {
+      if (!account || !provider) {
         setLoading(false);
         return;
       }
@@ -44,7 +43,6 @@ const DAOGovernance: React.FC = () => {
         setError(null);
 
         // Get contracts
-        const provider = new ethers.providers.Web3Provider(library.provider);
         const signer = provider.getSigner();
         const daoContract = new ethers.Contract(homeFaxDAOAddress, HomeFaxDAOABI, signer);
         const tokenContract = new ethers.Contract(homeFaxTokenAddress, HomeFaxTokenABI, signer);
@@ -118,16 +116,15 @@ const DAOGovernance: React.FC = () => {
     };
 
     fetchDAOData();
-  }, [account, library, homeFaxDAOAddress, homeFaxTokenAddress]);
+  }, [account, provider, homeFaxDAOAddress, homeFaxTokenAddress]);
 
   const handleVote = async (proposalId: string, support: number) => {
-    if (!account || !library) {
+    if (!account || !provider) {
       setError('Please connect your wallet to vote');
       return;
     }
 
     try {
-      const provider = new ethers.providers.Web3Provider(library.provider);
       const signer = provider.getSigner();
       const daoContract = new ethers.Contract(homeFaxDAOAddress, HomeFaxDAOABI, signer);
 
@@ -143,13 +140,12 @@ const DAOGovernance: React.FC = () => {
   };
 
   const handleDelegate = async () => {
-    if (!account || !library) {
+    if (!account || !provider) {
       setError('Please connect your wallet to delegate');
       return;
     }
 
     try {
-      const provider = new ethers.providers.Web3Provider(library.provider);
       const signer = provider.getSigner();
       const tokenContract = new ethers.Contract(homeFaxTokenAddress, HomeFaxTokenABI, signer);
 
