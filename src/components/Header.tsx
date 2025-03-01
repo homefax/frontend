@@ -13,6 +13,7 @@ const Header: React.FC = () => {
   const isLoggedIn = location.pathname === '/dashboard' ||
                      location.pathname === '/reports' ||
                      location.pathname === '/activity' ||
+                     location.pathname === '/governance' ||
                      location.pathname.startsWith('/properties/');
   
   const toggleMobileMenu = () => {
@@ -43,6 +44,9 @@ const Header: React.FC = () => {
             </li>
             <li>
               <Link to="/properties" className="nav-link">Properties</Link>
+            </li>
+            <li>
+              <Link to="/governance" className="nav-link">DAO Governance</Link>
             </li>
           </ul>
           
