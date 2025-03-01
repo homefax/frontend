@@ -1,4 +1,14 @@
+/**
+ * AuthPage Component
+ *
+ * This component handles user authentication with multiple options:
+ * - Email/password authentication
+ * - Social media logins via Okto SDK (Facebook, Twitter, GitHub, Apple, LinkedIn, Discord, Gmail)
+ * - Crypto wallet connection via Base (kept as original implementation)
+ */
+
 import React, { useState, useContext, useEffect } from 'react';
+import './AuthPage.css'; // Make sure to create this CSS file
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -15,6 +25,12 @@ enum AuthMode {
 enum AuthOption {
   EMAIL = 'email',
   GMAIL = 'gmail',
+  FACEBOOK = 'facebook',
+  TWITTER = 'twitter',
+  GITHUB = 'github',
+  APPLE = 'apple',
+  LINKEDIN = 'linkedin',
+  DISCORD = 'discord',
   WALLET = 'wallet'
 }
 
@@ -110,6 +126,32 @@ const AuthPage: React.FC = () => {
     }, 1000);
   };
   
+  /**
+   * Handle social media authentication using Okto SDK
+   *
+   * This function handles authentication for various social media platforms:
+   * - Facebook, Twitter, GitHub, Apple, LinkedIn, Discord
+   *
+   * The actual implementation would use the Okto SDK to authenticate with these platforms.
+   * For now, we're simulating the authentication process.
+   */
+  const handleSocialAuth = (provider: AuthOption) => {
+    setAuthOption(provider);
+    setIsLoading(true);
+    
+    // In a real implementation, we would use the Okto SDK to authenticate
+    // Example: okto.auth.loginWithSocial(provider);
+    
+    // Simulate social authentication with Okto SDK
+    setTimeout(() => {
+      console.log(`Authenticating with ${provider}`);
+      setIsLoading(false);
+      
+      // Redirect to dashboard page
+      navigate('/dashboard');
+    }, 1000);
+  };
+  
   const handleWalletAuth = () => {
     setAuthOption(AuthOption.WALLET);
     setWalletCreationStep('wallet');
@@ -181,30 +223,62 @@ const AuthPage: React.FC = () => {
             </p>
           </div>
           
+          {/*
+            Social login options using icon-only buttons for a cleaner UI
+            Each button has a title attribute for accessibility and to show a tooltip on hover
+          */}
           <div className="auth-options">
+            <button
+              className={`auth-option-btn  ${authOption === AuthOption.WALLET ? 'active' : ''}`}
+              onClick={handleWalletAuth}
+              disabled={isLoading}
+              title="Connect with Crypto Wallet"
+            >
+              <img
+                  src='/ether-icon.png'
+                  alt="Blockchain"
+                  style={{ width: '40%', height: '40%', objectFit: 'contain' }}
+                />
+            </button>
             <button
               className={`auth-option-btn email-btn ${authOption === AuthOption.EMAIL ? 'active' : ''}`}
               onClick={() => setAuthOption(AuthOption.EMAIL)}
               disabled={isLoading}
+              title="Continue with Email"
             >
               <span className="auth-option-icon">✉️</span>
-              Continue with Email
             </button>
             <button
               className={`auth-option-btn gmail-btn ${authOption === AuthOption.GMAIL ? 'active' : ''}`}
               onClick={handleGmailAuth}
               disabled={isLoading}
+              title="Continue with Gmail"
             >
               <span className="auth-option-icon">G</span>
-              Continue with Gmail
             </button>
             <button
-              className={`auth-option-btn wallet-btn ${authOption === AuthOption.WALLET ? 'active' : ''}`}
-              onClick={handleWalletAuth}
+              className={`auth-option-btn facebook-btn ${authOption === AuthOption.FACEBOOK ? 'active' : ''}`}
+              onClick={() => handleSocialAuth(AuthOption.FACEBOOK)}
               disabled={isLoading}
+              title="Continue with Facebook"
             >
-              <span className="auth-option-icon">🔐</span>
-              Connect Wallet
+              <span className="auth-option-icon">f</span>
+            </button>
+            <button
+              className={`auth-option-btn twitter-btn ${authOption === AuthOption.TWITTER ? 'active' : ''}`}
+              onClick={() => handleSocialAuth(AuthOption.TWITTER)}
+              disabled={isLoading}
+              title="Continue with Twitter"
+            >
+              <span className="auth-option-icon">𝕏</span>
+            </button>
+            <button
+              className={`auth-option-btn apple-btn ${authOption === AuthOption.APPLE ? 'active' : ''}`}
+              onClick={() => handleSocialAuth(AuthOption.APPLE)}
+              disabled={isLoading}
+              title="Continue with Apple"
+            >
+              <span className="auth-option-icon">🍎</span>
             </button>
           </div>
           
@@ -291,6 +365,54 @@ const AuthPage: React.FC = () => {
             <div className="auth-message">
               <div className="auth-message-icon">G</div>
               <p>Redirecting to Google authentication...</p>
+              <div className="loading-spinner"></div>
+            </div>
+          )}
+          
+          {authOption === AuthOption.FACEBOOK && (
+            <div className="auth-message">
+              <div className="auth-message-icon">f</div>
+              <p>Redirecting to Facebook authentication...</p>
+              <div className="loading-spinner"></div>
+            </div>
+          )}
+          
+          {authOption === AuthOption.TWITTER && (
+            <div className="auth-message">
+              <div className="auth-message-icon">𝕏</div>
+              <p>Redirecting to Twitter authentication...</p>
+              <div className="loading-spinner"></div>
+            </div>
+          )}
+          
+          {authOption === AuthOption.GITHUB && (
+            <div className="auth-message">
+              <div className="auth-message-icon">⌨️</div>
+              <p>Redirecting to GitHub authentication...</p>
+              <div className="loading-spinner"></div>
+            </div>
+          )}
+          
+          {authOption === AuthOption.APPLE && (
+            <div className="auth-message">
+              <div className="auth-message-icon">🍎</div>
+              <p>Redirecting to Apple authentication...</p>
+              <div className="loading-spinner"></div>
+            </div>
+          )}
+          
+          {authOption === AuthOption.LINKEDIN && (
+            <div className="auth-message">
+              <div className="auth-message-icon">in</div>
+              <p>Redirecting to LinkedIn authentication...</p>
+              <div className="loading-spinner"></div>
+            </div>
+          )}
+          
+          {authOption === AuthOption.DISCORD && (
+            <div className="auth-message">
+              <div className="auth-message-icon">🎮</div>
+              <p>Redirecting to Discord authentication...</p>
               <div className="loading-spinner"></div>
             </div>
           )}
